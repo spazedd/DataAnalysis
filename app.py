@@ -40,6 +40,26 @@ st.set_page_config(page_title="Promptly Resumed — Research Lab", layout="wide"
 st.title("Promptly Resumed — Research Lab")
 st.caption("SQL + Python + lightweight AI summaries. Toggle manual vs automation per project.")
 
+# --- Quick diagnostics (optional; collapse if you want) ---
+with st.expander("🔧 Debug: data connection", expanded=False):
+    import os as _os
+    st.write("DB path:", DB_PATH)
+    exists = _os.path.exists(DB_PATH)
+    size = _os.path.getsize(DB_PATH) if exists else 0
+    st.write("Exists:", exists, "Size (bytes):", size)
+    try:
+        cnt_projects = pd.read_sql_query("SELECT COUNT(*) AS c FROM projects", conn)["c"].iloc[0]
+        cnt_datapts = pd.read_sql_query("SELECT COUNT(*) AS c FROM datapoints", conn)["c"].iloc[0]
+        st.write("Projects:", cnt_projects, "Datapoints:", cnt_datapts)
+        distinct_keys = pd.read_sql_query(
+            "SELECT project_key, COUNT(*) as n FROM datapoints GROUP BY project_key ORDER BY n DESC LIMIT 10", conn
+        )
+        st.dataframe(distinct_keys)
+        latest = pd.read_sql_query("SELECT MAX(ts) AS ts FROM datapoints", conn)["ts"].iloc[0]
+        st.write("Latest ts:", latest)
+    except Exception as e:
+        st.error(f"DB query error: {e}")
+
 # -------------------- Sidebar: Admin --------------------
 st.sidebar.header("Admin")
 
@@ -125,8 +145,7 @@ def plot_series(df: pd.DataFrame, title: str):
     st.pyplot(fig)
 
 # =======================================================
-#                 Mortgage Scenarios (NEW)
-#   Requires: automation/mortgage50_update.py to have run
+#            50-Year Mortgage Scenarios (ENHANCED)
 # =======================================================
 st.subheader("50-Year Mortgage Scenarios")
 
@@ -220,19 +239,51 @@ else:
     ax.set_ylabel("USD / month")
     st.pyplot(fig)
 
-    # One-liner takeaway
-    if (pct_pmt_50 is not None) and (mons_50 is not None) and (pct_int_50 is not None) and (intp_50 is not None):
-        st.info(
-            f"At ${principal:,} in the **{scenario}** rate scenario, a 50-year lowers the monthly by "
-            f"**{pct_pmt_50:.1f}%** (~${mons_50:,.0f}/mo) but increases lifetime interest by "
-            f"**{pct_int_50:.1f}%** (~${intp_50:,.0f})."
+    # Narrative takeaway + downloads
+    if None not in (pct_pmt_50, mons_50, pct_int_50, intp_50):
+        story = (
+            f"For a ${principal:,} loan in the **{scenario}** rate scenario: "
+            f"a 50-year cuts the monthly by **{pct_pmt_50:.1f}%** (~${mons_50:,.0f}/mo) "
+            f"but increases lifetime interest by **{pct_int_50:.1f}%** (~${intp_50:,.0f}). "
+            f"The 40-year sits in between (monthly −{pct_pmt_40:.1f}%, interest +{pct_int_40:.1f}%). "
+            "In a supply-constrained market, that mostly expands what buyers can bid rather than the number of homes—"
+            "so it risks higher prices while transferring much more to lenders."
         )
+        st.success(story)
+
+        colA, colB, colC = st.columns(3)
+        with colA:
+            st.download_button("Download summary (.txt)", data=story, file_name=f"mortgage_summary_{principal}_{scenario}.txt")
+        with colB:
+            out_json = {
+                "principal": principal,
+                "scenario": scenario,
+                "monthly": {"30y": m30, "40y": m40, "50y": m50},
+                "interest_total": {"30y": i30, "40y": i40, "50y": i50},
+                "deltas": {
+                    "monthly_savings_vs_30": {"40y": mons_40, "50y": mons_50},
+                    "interest_increase_vs_30": {"40y": intp_40, "50y": intp_50},
+                    "monthly_reduction_pct_vs_30": {"40y": pct_pmt_40, "50y": pct_pmt_50},
+                    "interest_increase_pct_vs_30": {"40y": pct_int_40, "50y": pct_int_50},
+                },
+                "timestamp": latest_ts,
+            }
+            st.download_button(
+                "Download JSON", data=json.dumps(out_json, indent=2),
+                file_name=f"mortgage_view_{principal}_{scenario}.json", mime="application/json"
+            )
+        with colC:
+            import io
+            buf = io.BytesIO()
+            fig.savefig(buf, format="png", bbox_inches="tight")
+            st.download_button("Download chart (PNG)", data=buf.getvalue(),
+                               file_name=f"mortgage_chart_{principal}_{scenario}.png", mime="image/png")
 
 st.divider()
 
-# -------------------- Enabled Projects --------------------
+# -------------------- Enabled Projects (skip mortgage summary project here) --------------------
 projects = pd.read_sql_query(
-    "SELECT key,name,description FROM projects WHERE enabled=1 ORDER BY name",
+    "SELECT key,name,description FROM projects WHERE enabled=1 AND key!='mortgage50_math' ORDER BY name",
     conn,
 )
 
