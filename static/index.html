@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Promptly Resumed — Research Lab</title>
+  <style>
+    body {
+      font-family: system-ui, Arial, sans-serif;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      height: 100dvh;
+      background: #0f1115;
+      color: #e7e7ea;
+    }
+    .card {
+      max-width: 700px;
+      padding: 2.5rem;
+      border: 1px solid #2a2d37;
+      border-radius: 18px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+      text-align: center;
+    }
+    h1 { margin-top: 0; }
+    a { color: #7aa2ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    footer { margin-top: 2rem; font-size: 0.9rem; color: #aaa; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Promptly Resumed — Research Lab</h1>
+    <p>Welcome to my personal research lab — a space where I explore data, automation, and AI-driven analysis through hands-on projects.</p>
+    <p>New dashboards and experiments are currently being built. Check back soon for live analytics.</p>
+
+    <p>
+      <a href="https://okbutwhat.com">Portfolio</a> ·
+      <a href="https://somethingtoreport.com">News Hub</a>
+    </p>
+
+    <footer>
+      <p>&copy; <span id="year"></span> Promptly Resumed · Built with Python, SQL, and curiosity.</p>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
