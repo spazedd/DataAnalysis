@@ -2,13 +2,15 @@ name: PromptlyResumed Auto Ingest
 
 on:
   schedule:
-    - cron: "0 7 * * *"  # daily 07:00 UTC ≈ 11 PM PT
+    - cron: "0 7 * * *"   # daily 07:00 UTC ≈ 11 PM PT (adjust if you want)
   workflow_dispatch: {}
+
+permissions:
+  contents: write
 
 jobs:
   run:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -16,38 +18,33 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install deps
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install requests
 
-      - name: Ensure SQLite DB exists
+      - name: Ensure DB exists
         run: |
           python - <<'PY'
           import sqlite3
-          conn = sqlite3.connect('research.db')
-          conn.close()
+          conn = sqlite3.connect('research.db'); conn.close()
           PY
 
       - name: Show repo tree (debug)
         run: |
           pwd
           ls -la
-          find . -maxdepth 3 -type f -name "data_update.py" -print
 
       - name: Run updater (xAI only)
         env:
           PR_DB_PATH: research.db
-          # Set this secret in: Repo → Settings → Secrets → Actions
-          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
-          # Optional fallback if you used a different name:
-          XAI_API_TOKEN: ${{ secrets.XAI_API_TOKEN }}
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}   # <-- set in repo Settings → Secrets → Actions
         run: python data_update.py
 
       - name: Commit updated DB
         run: |
-          git config user.email "action@github.com"
-          git config user.name "GitHub Action"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add research.db
           git commit -m "Automated ingest $(date -u +'%Y-%m-%dT%H:%M:%SZ')" || echo "No DB changes"
           git push
