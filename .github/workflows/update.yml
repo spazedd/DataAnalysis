@@ -2,8 +2,9 @@ name: PromptlyResumed Auto Ingest
 
 on:
   schedule:
-    - cron: "0 7 * * *"   # daily 07:00 UTC ≈ 11 PM PT (adjust if you want)
-  workflow_dispatch: {}
+    # Runs every day at 11 PM Pacific (07:00 UTC)
+    - cron: "0 7 * * *"
+  workflow_dispatch: {}   # allows manual runs from the Actions tab
 
 permissions:
   contents: write
@@ -11,40 +12,58 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+    steps:
+      # --- 1. Checkout the repo ---
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # --- 2. Set up Python ---
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install deps
+      # --- 3. Install dependencies ---
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests
+          pip install requests pandas matplotlib
 
-      - name: Ensure DB exists
+      # --- 4. Ensure the SQLite DB exists ---
+      - name: Ensure research.db exists
         run: |
           python - <<'PY'
           import sqlite3
-          conn = sqlite3.connect('research.db'); conn.close()
+          conn = sqlite3.connect('research.db')
+          conn.close()
           PY
 
+      # --- 5. Debug: show repo files ---
       - name: Show repo tree (debug)
         run: |
+          echo "Repository structure:"
           pwd
           ls -la
 
+      # --- 6. Run xAI updater (data_update.py) ---
       - name: Run updater (xAI only)
         env:
           PR_DB_PATH: research.db
-          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}   # <-- set in repo Settings → Secrets → Actions
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}   # <- set this in repo Settings → Secrets → Actions
         run: python data_update.py
 
-      - name: Commit updated DB
+      # --- 7. Run mortgage scenarios calculator ---
+      - name: Run 50-year mortgage scenarios
+        env:
+          PR_DB_PATH: research.db
+        run: python automation/mortgage50_update.py
+
+      # --- 8. Commit and push updated DB ---
+      - name: Commit updated research.db
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add research.db
+          git add research.db || true
           git commit -m "Automated ingest $(date -u +'%Y-%m-%dT%H:%M:%SZ')" || echo "No DB changes"
           git push
