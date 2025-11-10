@@ -1,15 +1,16 @@
 # automation/mortgage50_update.py
-import csv, io, os, sqlite3, json
-from datetime import datetime
+import csv, io, os, sqlite3, json, re
+from datetime import datetime, timedelta
 import requests
+from pathlib import Path
 
 DB_PATH = os.getenv("PR_DB_PATH", "research.db")
 
-# --- Config ---
-FRED_SERIES = "MORTGAGE30US"  # 30-yr fixed (percent)
+FRED_SERIES = "MORTGAGE30US"  # 30-yr fixed
 FRED_CSV = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={FRED_SERIES}"
-PRINCIPALS = [200_000, 300_000, 400_000, 600_000, 800_000]   # edit as you like
-TERMS = [30, 40, 50]  # years
+
+PRINCIPALS = [200_000, 300_000, 400_000, 600_000, 800_000]
+TERMS = [30, 40, 50]
 PROJECT_KEY = "mortgage50_math"
 
 def annuity_payment(P, r_annual, years):
@@ -24,7 +25,7 @@ def latest_fred_rate():
     for row in reversed(rows):
         v = row.get(FRED_SERIES)
         if v and v not in ("", "."):
-            return float(v) / 100.0  
+            return float(v) / 100.0
     raise RuntimeError("No usable FRED value found")
 
 def ensure_tables(conn):
@@ -74,7 +75,7 @@ def put(conn, ts, metric, value, meta):
     )
 
 def main():
-    base_rate = latest_fred_rate()              
+    base_rate = latest_fred_rate()
     scenarios = {
         "base": base_rate,
         "plus1pct": max(0.0, base_rate + 0.01),
@@ -89,44 +90,56 @@ def main():
 
     for label, rate in scenarios.items():
         for P in PRINCIPALS:
-            
             pmt = {yr: annuity_payment(P, rate, yr) for yr in TERMS}
-            
             tot_int = {yr: pmt[yr] * yr * 12 - P for yr in TERMS}
 
-            
             for yr in TERMS:
                 meta = {"principal": P, "term_years": yr, "rate_decimal": rate, "scenario": label}
                 put(conn, ts, f"pmt_{yr}y_{P}_{label}", pmt[yr], meta)
                 put(conn, ts, f"interest_total_{yr}y_{P}_{label}", tot_int[yr], meta)
 
-            
             m30, m40, m50 = pmt[30], pmt[40], pmt[50]
             i30, i40, i50 = tot_int[30], tot_int[40], tot_int[50]
 
-            
             put(conn, ts, f"monthly_savings_40_vs_30_{P}_{label}", m30 - m40, {"principal": P, "rate_decimal": rate, "scenario": label})
             put(conn, ts, f"monthly_savings_50_vs_30_{P}_{label}", m30 - m50, {"principal": P, "rate_decimal": rate, "scenario": label})
             put(conn, ts, f"interest_penalty_40_vs_30_{P}_{label}", i40 - i30, {"principal": P, "rate_decimal": rate, "scenario": label})
             put(conn, ts, f"interest_penalty_50_vs_30_{P}_{label}", i50 - i30, {"principal": P, "rate_decimal": rate, "scenario": label})
 
-            
-            def pct(a, b):  
-                return (a / b - 1.0) * 100.0
+            def pct(a, b): return (a / b - 1.0) * 100.0
+            put(conn, ts, f"pmt_reduction_40_vs_30_pct_{P}_{label}", (1 - m40/m30)*100.0, {"principal": P, "rate_decimal": rate, "scenario": label})
+            put(conn, ts, f"pmt_reduction_50_vs_30_pct_{P}_{label}", (1 - m50/m30)*100.0, {"principal": P, "rate_decimal": rate, "scenario": label})
+            put(conn, ts, f"interest_increase_40_vs_30_pct_{P}_{label}", pct(i40, i30), {"principal": P, "rate_decimal": rate, "scenario": label})
+            put(conn, ts, f"interest_increase_50_vs_30_pct_{P}_{label}", pct(i50, i30), {"principal": P, "rate_decimal": rate, "scenario": label})
 
-            monthly_redux_40 = (1 - m40 / m30) * 100.0
-            monthly_redux_50 = (1 - m50 / m30) * 100.0
-            interest_incr_40  = pct(i40, i30)
-            interest_incr_50  = pct(i50, i30)
+    # --- JSON export (keep last 30 days) ---
+    OUT_DIR = Path("data/mortgage"); OUT_DIR.mkdir(parents=True, exist_ok=True)
+    date_str = datetime.utcnow().strftime("%Y-%m-%d")
+    json_path = OUT_DIR / f"mortgage_scenarios_{date_str}.json"
 
-            put(conn, ts, f"pmt_reduction_40_vs_30_pct_{P}_{label}", monthly_redux_40, {"principal": P, "rate_decimal": rate, "scenario": label})
-            put(conn, ts, f"pmt_reduction_50_vs_30_pct_{P}_{label}", monthly_redux_50, {"principal": P, "rate_decimal": rate, "scenario": label})
-            put(conn, ts, f"interest_increase_40_vs_30_pct_{P}_{label}", interest_incr_40, {"principal": P, "rate_decimal": rate, "scenario": label})
-            put(conn, ts, f"interest_increase_50_vs_30_pct_{P}_{label}", interest_incr_50, {"principal": P, "rate_decimal": rate, "scenario": label})
+    rows = conn.execute(
+        "SELECT * FROM datapoints WHERE project_key=? AND ts LIKE ?",
+        (PROJECT_KEY, f"{date_str}%")
+    ).fetchall()
+    cols = [c[1] for c in conn.execute("PRAGMA table_info(datapoints)")]
+
+    payload = [dict(zip(cols, r)) for r in rows]
+    with open(json_path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=2, ensure_ascii=False)
+
+    cutoff = (datetime.utcnow() - timedelta(days=30)).date()
+    pat = re.compile(r"^mortgage_scenarios_(\d{4}-\d{2}-\d{2})\.json$")
+    for p in OUT_DIR.glob("mortgage_scenarios_*.json"):
+        m = pat.match(p.name)
+        if not m: continue
+        try: d = datetime.strptime(m.group(1), "%Y-%m-%d").date()
+        except ValueError: continue
+        if d < cutoff:
+            p.unlink(missing_ok=True)
 
     conn.commit()
     conn.close()
-    print(f"✅ wrote scenarios at base_rate={base_rate:.3%}")
-
+    print(f"✅ wrote scenarios at base_rate={base_rate:.3%} and exported JSON → {json_path}")
+    
 if __name__ == "__main__":
     main()
