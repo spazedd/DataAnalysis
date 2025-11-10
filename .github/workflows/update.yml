@@ -2,7 +2,7 @@ name: PromptlyResumed Auto Ingest
 
 on:
   schedule:
-    - cron: "0 7 * * *"   # daily 07:00 UTC ≈ 11 PM PT
+    - cron: "0 7 * * *"  # daily 07:00 UTC ≈ 11 PM PT
   workflow_dispatch: {}
 
 jobs:
@@ -29,11 +29,18 @@ jobs:
           conn.close()
           PY
 
-      - name: Run updater
+      - name: Show repo tree (debug)
+        run: |
+          pwd
+          ls -la
+          find . -maxdepth 3 -type f -name "data_update.py" -print
+
+      - name: Run updater (xAI only)
         env:
           PR_DB_PATH: research.db
-          # Either secret name works — the script will use whichever exists.
-          X_API_TOKEN: ${{ secrets.X_API_TOKEN }}
+          # Set this secret in: Repo → Settings → Secrets → Actions
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+          # Optional fallback if you used a different name:
           XAI_API_TOKEN: ${{ secrets.XAI_API_TOKEN }}
         run: python data_update.py
 
