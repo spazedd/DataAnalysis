@@ -1,7 +1,3 @@
-nano data_update.py
-nano data_update.py
-nano data_update.py
-nano data_update.py
 import os, json, time
 import sqlite3
 from datetime import datetime
@@ -128,4 +124,7 @@ def main():
             ingest_x(key, params_json)
             time.sleep(1)
         else:
-            print(f"Skipping {key}: no x_query configured and non-X x
+            print(f"Skipping {key}: no x_query configured and non-X ingestors disabled.")
+
+if __name__ == "__main__":
+    main()
