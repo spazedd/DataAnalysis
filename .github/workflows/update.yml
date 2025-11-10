@@ -4,7 +4,7 @@ on:
   schedule:
     # Runs every day at 11 PM Pacific (07:00 UTC)
     - cron: "0 7 * * *"
-  workflow_dispatch: {}   # allows manual runs from the Actions tab
+  workflow_dispatch: {}   # allows manual runs
 
 permissions:
   contents: write
@@ -14,56 +14,49 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # --- 1. Checkout the repo ---
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # --- 2. Set up Python ---
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      # --- 3. Install dependencies ---
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests pandas matplotlib
 
-      # --- 4. Ensure the SQLite DB exists ---
       - name: Ensure research.db exists
         run: |
           python - <<'PY'
           import sqlite3
-          conn = sqlite3.connect('research.db')
-          conn.close()
+          conn = sqlite3.connect('research.db'); conn.close()
           PY
 
-      # --- 5. Debug: show repo files ---
       - name: Show repo tree (debug)
         run: |
           echo "Repository structure:"
           pwd
           ls -la
 
-      # --- 6. Run xAI updater (data_update.py) ---
+      # Your xAI updater (optional but kept)
       - name: Run updater (xAI only)
         env:
           PR_DB_PATH: research.db
-          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}   # <- set this in repo Settings → Secrets → Actions
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
         run: python data_update.py
 
-      # --- 7. Run mortgage scenarios calculator ---
+      # Mortgage calculator + JSON export
       - name: Run 50-year mortgage scenarios
         env:
           PR_DB_PATH: research.db
         run: python automation/mortgage50_update.py
 
-      # --- 8. Commit and push updated DB ---
-      - name: Commit updated research.db
+      - name: Commit updated research.db and data exports
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add research.db || true
+          git add research.db data/mortgage || true
           git commit -m "Automated ingest $(date -u +'%Y-%m-%dT%H:%M:%SZ')" || echo "No DB changes"
           git push
