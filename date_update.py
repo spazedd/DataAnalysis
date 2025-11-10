@@ -4,7 +4,8 @@ from datetime import datetime
 import requests
 
 DB_PATH = os.getenv("PR_DB_PATH", "research.db")
-X_API_TOKEN = os.getenv("X_API_TOKEN")  # set in GitHub Actions secrets
+# Accept either name: X_API_TOKEN (X/Twitter) or XAI_API_TOKEN (user-provided name)
+X_API_TOKEN = os.getenv("X_API_TOKEN") or os.getenv("XAI_API_TOKEN")
 X_API_BASE = os.getenv("X_API_BASE", "https://api.x.com/2")
 
 conn = sqlite3.connect(DB_PATH)
@@ -59,10 +60,13 @@ def upsert_point(project_key: str, value: float, source: str, meta: dict):
 
 def _x_request(url: str, params: dict):
     if not X_API_TOKEN:
-        raise RuntimeError("X_API_TOKEN is not set. Add it as a repo Actions secret.")
+        raise RuntimeError(
+            "No API token found. Set X_API_TOKEN (or XAI_API_TOKEN) as a GitHub Actions secret."
+        )
     headers = {"Authorization": f"Bearer {X_API_TOKEN}"}
     r = requests.get(url, headers=headers, params=params, timeout=30)
     if r.status_code == 404 and "api.x.com" in url:
+        # fallback to twitter domain if api.x.com not available
         alt = url.replace("api.x.com", "api.twitter.com")
         r = requests.get(alt, headers=headers, params=params, timeout=30)
     r.raise_for_status()
@@ -99,6 +103,7 @@ def ingest_x(project_key: str, params_json: str):
     data = fetch_x_recent(query, max_results=int(params.get("x_max", 25)))
     tweets = data.get("data", [])
     if not tweets:
+        # Do nothing if no tweets; still record a sentinel for traceability
         upsert_point(project_key, 0.0, "x_api_none", {"query": query, "note": "no tweets"})
         return
     vals = [score_from_engagement(t) for t in tweets]
@@ -114,11 +119,12 @@ def main():
         return
     for key, params_json in rows:
         params = json.loads(params_json or "{}")
+        # Only use X API path; skip everything else (per user's request)
         if params.get("x_query") or key.lower() == "sentiment":
             ingest_x(key, params_json)
             time.sleep(1)
         else:
-            upsert_point(key, 0.0, "scheduler", {"note": "no ingestor defined yet"})
+            print(f"Skipping {key}: no x_query configured and non-X ingestors disabled.")
 
 if __name__ == "__main__":
     main()
