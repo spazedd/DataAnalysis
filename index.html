@@ -1,303 +1,344 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="auto">
+<!doctype html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Promptly Resumed — Research Lab</title>
-  <meta name="description" content="A minimal research lab where I learn tools by doing: projects on topics I find interesting, using SQL, Python, and APIs." />
+  <title>Promptly Resumed — Research Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light dark" />
-
-  <!-- Inter + system fallbacks; remove if you prefer only system fonts -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;650;700&display=swap" rel="stylesheet">
-
+  <meta name="theme-color" content="#0f1011" />
+  <meta name="description" content="Type a prompt, view the Streamlit app inside the page, and see AI results below—clean and minimal." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
-    /* ---------- Theme tokens ---------- */
-    :root {
-      --bg: #ffffff;
-      --text: #111418;
-      --muted: #5b616b;
-      --line: #e7e9ee;
-      --card: #fafbfc;
-      --accent: #0b57d0;
-      --accent-contrast: #ffffff;
-      --code: #0f111a;
-      --radius: 12px;
-      --max: 920px;
-      --shadow: 0 2px 20px rgba(0,0,0,.04);
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0c0f14;
-        --text: #e7ecf3;
-        --muted: #a7b0bd;
-        --line: #1b2330;
-        --card: #0f141b;
-        --accent: #7aa2ff;
-        --accent-contrast: #0c0f14;
-        --code: #0a0d12;
-        --shadow: 0 6px 24px rgba(0,0,0,.35);
-      }
-    }
-    /* Force theme when [data-theme] is set */
-    html[data-theme="light"] {
-      --bg:#ffffff; --text:#111418; --muted:#5b616b; --line:#e7e9ee; --card:#fafbfc; --accent:#0b57d0; --accent-contrast:#ffffff; --code:#0f111a; --shadow:0 2px 20px rgba(0,0,0,.04);
-    }
-    html[data-theme="dark"] {
-      --bg:#0c0f14; --text:#e7ecf3; --muted:#a7b0bd; --line:#1b2330; --card:#0f141b; --accent:#7aa2ff; --accent-contrast:#0c0f14; --code:#0a0d12; --shadow:0 6px 24px rgba(0,0,0,.35);
-    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,system-ui,-apple-system,sans-serif;background:#fff;color:#111827;line-height:1.55;font-size:16px}
+    a{color:#2563eb;text-decoration:none} a:hover{color:#1d4ed8;text-decoration:underline}
+    .wrap{max-width:1200px;margin:0 auto;padding:20px}
 
-    /* ---------- Base ---------- */
-    * { box-sizing: border-box }
-    html, body { height: 100% }
-    body {
-      margin: 0;
-      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-    a { color: var(--accent); text-decoration: none }
-    a:hover { text-decoration: underline }
-    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace }
+    /* Gate */
+    .gate{position:fixed;inset:0;background:#0b1220;color:#e5e7eb;display:flex;align-items:center;justify-content:center;z-index:10000}
+    .gate-inner{width:100%;max-width:380px;background:#0f172a;border:1px solid #1f2937;border-radius:12px;padding:18px}
+    .gate h2{font-weight:600;margin-bottom:6px}
+    .gate p{color:#94a3b8;margin:6px 0 12px}
+    .gate input{width:100%;font-size:16px;padding:12px 14px;border-radius:10px;border:1px solid #334155;background:#0b1020;color:#e5e7eb}
+    .gate .btn{display:inline-block;margin-top:10px;border:1px solid #334155;border-radius:10px;padding:10px 14px;color:#e5e7eb}
+    .gate .btn:hover{background:#e5e7eb;color:#0b1020;border-color:#e5e7eb}
 
-    /* ---------- Layout ---------- */
-    .wrap { max-width: var(--max); margin: 0 auto; padding: 24px 18px }
-    header {
-      position: sticky; top: 0; z-index: 50;
-      background: color-mix(in oklab, var(--bg) 80%, transparent);
-      backdrop-filter: blur(6px);
-      border-bottom: 1px solid var(--line);
-    }
-    .nav { display: flex; align-items: center; justify-content: space-between; gap: 12px }
-    .brand { font-weight: 700; letter-spacing: .2px }
-    .toggle {
-      display: inline-flex; align-items: center; gap: 10px;
-      border: 1px solid var(--line); padding: 8px 12px; border-radius: 999px;
-      background: var(--card); box-shadow: var(--shadow); cursor: pointer; user-select: none;
-    }
-    .toggle button {
-      all: unset; display: inline-flex; gap: 8px; align-items: center; cursor: pointer;
-    }
-    .toggle .icon { width: 18px; height: 18px; display: inline-block }
-    .hero { padding: 42px 18px 10px }
-    h1 { font-size: clamp(28px, 4vw, 44px); line-height: 1.15; margin: 0 0 10px }
-    .lead { color: var(--muted); font-size: clamp(16px, 2.2vw, 19px); margin: 0 }
-    .section { padding: 22px 18px }
-    .card {
-      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
-      box-shadow: var(--shadow); padding: 18px;
-    }
-    h2 { font-size: 20px; margin: 0 0 8px }
-    .muted { color: var(--muted) }
+    /* Header */
+    header{padding:6px 0 14px;border-bottom:1px solid #e5e7eb;margin-bottom:12px}
+    .brand{font-size:18px;font-weight:600}
 
-    /* ---------- Grid ---------- */
-    .grid { display: grid; grid-template-columns: 1fr; gap: 14px }
-    @media (min-width: 860px) {
-      .grid { grid-template-columns: repeat(12, 1fr); gap: 16px }
-      .span-4 { grid-column: span 4 }
-      .span-6 { grid-column: span 6 }
-      .span-8 { grid-column: span 8 }
-      .span-12 { grid-column: span 12 }
-    }
+    /* Two-column */
+    .grid{display:grid;grid-template-columns:280px 1fr;gap:16px}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
 
-    /* ---------- Project list ---------- */
-    .proj {
-      display: flex; flex-direction: column; gap: 6px;
-      border: 1px solid var(--line); border-radius: 10px; padding: 14px; background: var(--bg);
-    }
-    .proj h3 { margin: 0; font-size: 17px }
-    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px }
-    .tag { font-size: 12px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted) }
-    .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center }
-    .btn {
-      display: inline-block; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line);
-      background: var(--bg); color: var(--text); text-decoration: none;
-    }
-    .btn.primary {
-      background: var(--accent); border-color: var(--accent); color: var(--accent-contrast);
-    }
-    footer { border-top: 1px solid var(--line); margin-top: 30px; padding: 26px 18px; text-align: center }
+    /* Panels */
+    .panel,.viewer,.section{border:1px solid #e5e7eb;border-radius:10px;background:#fff}
+    .panel{padding:14px}
+    .viewer{overflow:hidden}
+    .section{padding:14px;margin-top:16px}
+    .section h2{font-size:18px;font-weight:600;margin-bottom:6px}
+    .muted{color:#6b7280}
 
-    /* ---------- Code note ---------- */
-    .note { font-size: 13px; padding: 10px 12px; border-left: 3px solid var(--line); background: var(--card); border-radius: 8px }
+    /* Inputs */
+    .label{font-size:12px;text-transform:uppercase;color:#6b7280;letter-spacing:.06em;margin-bottom:6px}
+    .prompt{width:100%;font-size:18px;padding:14px 16px;border:1px solid #d1d5db;border-radius:10px;background:#f9fafb;color:#111}
+    .prompt:focus{border-color:#111;background:#fff;outline:none}
+    .hint{color:#6b7280;font-size:13px;margin-top:8px}
+    .tiny-actions{display:flex;gap:8px;margin-top:10px}
+    .link-btn{font-size:14px;border:1px solid #e5e7eb;border-radius:10px;padding:8px 12px;color:#111}
+    .link-btn:hover{background:#111;color:#fff;border-color:#111}
+
+    iframe{display:block;width:100%;height:560px;border:0}
+
+    /* Results */
+    .results{margin-top:12px;border:1px solid #e5e7eb;border-radius:10px;padding:14px}
+    .results h3{font-size:16px;font-weight:600;margin:6px 0}
+    .bullets{margin:6px 0 6px 16px}
+    .bullets li{margin:4px 0}
+    .table{width:100%;border-collapse:collapse;margin-top:8px}
+    .table th,.table td{padding:8px 10px;border-bottom:1px solid #e5e7eb;text-align:left}
+    .chartBox{border:1px solid #e5e7eb;border-radius:10px;padding:8px;margin-top:8px}
+
+    /* Extras */
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+    .chip{padding:6px 10px;border:1px solid #e5e7eb;border-radius:999px;font-size:13px;color:#374151;background:#fafafa;cursor:pointer}
+    .chip:hover{background:#eef2ff;border-color:#c7d2fe}
+
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .card{border:1px solid #e5e7eb;border-radius:10px;padding:12px}
+    .card h3{font-size:15px;margin-bottom:4px}
+    .card p{color:#6b7280;font-size:14px}
+
+    @media (max-width:900px){.cards{grid-template-columns:1fr}}
+    footer{border-top:1px solid #e5e7eb;margin-top:24px;padding:16px 0;color:#6b7280;text-align:center}
   </style>
 </head>
 <body>
-  <header>
-    <div class="wrap nav" aria-label="Site">
-      <div class="brand">Promptly Resumed</div>
-      <div class="toggle" role="group" aria-label="Theme">
-        <button id="themeBtn" aria-pressed="false" title="Toggle light/dark">
-          <span class="icon" aria-hidden="true" id="themeIcon">🌙</span>
-          <span id="themeLabel" class="muted">Dark</span>
-        </button>
-      </div>
+  <!-- Password Gate -->
+  <div class="gate" id="gate">
+    <div class="gate-inner">
+      <h2>Promptly Resumed — Access</h2>
+      <p>Enter the site password to continue.</p>
+      <input id="pw" type="password" placeholder="Site password" />
+      <a id="unlockBtn" class="btn" href="#">Unlock</a>
+      <p id="gateError" style="color:#fca5a5;display:none;margin-top:8px">Incorrect password</p>
     </div>
-  </header>
+  </div>
 
-  <main>
-    <section class="wrap hero" id="home" aria-labelledby="title">
-      <h1 id="title">A simple research lab where I learn by doing.</h1>
-      <p class="lead">
-        I’m building small projects on topics I find interesting. The goal is hands-on practice:
-        store and query data with SQL, analyze with Python, pull from APIs, and explain results clearly.
-        This is how I’ll actually learn the tools—by using them.
-      </p>
-      <div class="row" style="margin-top:16px">
-        <a class="btn primary" href="#projects">See project slots</a>
-        <a class="btn" href="#about">Why this exists</a>
-      </div>
-    </section>
+  <div class="wrap" id="appRoot" style="display:none">
+    <header>
+      <div class="brand">Promptly Resumed — Research</div>
+    </header>
 
-    <section class="wrap section grid" id="about" aria-labelledby="about-title">
-      <div class="span-8 card">
-        <h2 id="about-title">Why this exists</h2>
-        <p>
-          Courses can help, but I learn faster by building. This site is my space to practice essential work:
-          writing SQL, shaping data with pandas, calling APIs, and turning ideas into repeatable workflows.
-          It’s not a resume; it’s an ongoing record of what I’m learning through real projects.
-        </p>
-        <p class="muted">Clear scope, small steps, shipped often.</p>
-      </div>
-      <div class="span-4 card">
-        <h2>Focus</h2>
-        <ul style="margin:0; padding-left:18px">
-          <li>Practical SQL and joins</li>
-          <li>Data cleaning and viz</li>
-          <li>ETL and simple automation</li>
-          <li>APIs and small models</li>
-          <li>Short write-ups with limits</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="wrap section" id="projects" aria-labelledby="proj-title">
-      <div class="grid">
-        <div class="span-12">
-          <h2 id="proj-title">Project slots</h2>
-          <p class="muted" style="margin-top:-4px">Placeholders for now. I’ll link live demos as I build.</p>
+    <!-- Main working area -->
+    <div class="grid">
+      <!-- Left: Prompt -->
+      <aside class="panel">
+        <div class="label">Prompt</div>
+        <input id="q" class="prompt" type="text" placeholder="e.g., semiconductor export controls impact" />
+        <p class="hint">Type your topic. The app loads on the right; run analysis there. Results show below.</p>
+        <div class="tiny-actions">
+          <a id="openApp" class="link-btn" href="#" rel="noopener">Open app</a>
+          <a id="copyLink" class="link-btn" href="#" rel="noopener">Copy link</a>
         </div>
 
-        <article class="span-6 proj">
-          <h3>Economic Patterns</h3>
-          <p>Track a few indicators, calculate rolling trends, and keep notes on what changes and why.</p>
-          <div class="tags">
-            <span class="tag">SQL</span><span class="tag">pandas</span><span class="tag">time series</span>
+        <div class="section" style="margin-top:12px">
+          <h2>Quick examples</h2>
+          <div class="chips">
+            <span class="chip" data-prompt="50-year mortgages macro impact">50-year mortgages</span>
+            <span class="chip" data-prompt="U.S. semiconductor export controls 2024–2025">Chip export controls</span>
+            <span class="chip" data-prompt="Fentanyl trafficking routes and interdiction efficacy">Fentanyl routes</span>
+            <span class="chip" data-prompt="State-level budget surpluses and spending priorities">State surpluses</span>
+            <span class="chip" data-prompt="EV adoption vs grid reliability trade-offs">EVs & grid</span>
           </div>
-          <div class="row">
-            <a class="btn" href="#" aria-disabled="true">Notes (soon)</a>
-            <a class="btn" href="#" aria-disabled="true">Demo (soon)</a>
-          </div>
-        </article>
+        </div>
+      </aside>
 
-        <article class="span-6 proj">
-          <h3>Social Sentiment</h3>
-          <p>Collect topic snippets, score polarity, compare baselines over time, and visualize shifts.</p>
-          <div class="tags">
-            <span class="tag">APIs</span><span class="tag">NLTK/TextBlob</span><span class="tag">charts</span>
-          </div>
-          <div class="row">
-            <a class="btn" href="#" aria-disabled="true">Notes (soon)</a>
-            <a class="btn" href="#" aria-disabled="true">Demo (soon)</a>
-          </div>
-        </article>
+      <!-- Right: App + Results -->
+      <section>
+        <div class="viewer">
+          <iframe id="appFrame" title="Research App"></iframe>
+        </div>
+        <div class="results" id="resultsBox">
+          <div class="muted">No results yet. Run analysis in the app.</div>
+        </div>
+      </section>
+    </div>
 
-        <article class="span-6 proj">
-          <h3>Environmental Signals</h3>
-          <p>Daily temperature and precipitation trends with smoothing and simple anomaly checks.</p>
-          <div class="tags">
-            <span class="tag">CSV</span><span class="tag">pandas</span><span class="tag">viz</span>
-          </div>
-          <div class="row">
-            <a class="btn" href="#" aria-disabled="true">Notes (soon)</a>
-            <a class="btn" href="#" aria-disabled="true">Demo (soon)</a>
-          </div>
-        </article>
+    <!-- Recent Projects -->
+    <section class="section" id="recent">
+      <h2>Recent projects</h2>
+      <div id="projGrid" class="cards"></div>
+      <p class="muted" id="projEmpty" style="display:none;margin-top:6px">No local projects yet. Save from the app or this page and they’ll appear here.</p>
+    </section>
 
-        <article class="span-6 proj">
-          <h3>Truthiness Heuristics</h3>
-          <p>Store article snippets and test simple keyword/consistency rules to flag claims.</p>
-          <div class="tags">
-            <span class="tag">SQLite</span><span class="tag">full-text</span><span class="tag">heuristics</span>
-          </div>
-          <div class="row">
-            <a class="btn" href="#" aria-disabled="true">Notes (soon)</a>
-            <a class="btn" href="#" aria-disabled="true">Demo (soon)</a>
-          </div>
-        </article>
+    <!-- Highlights -->
+    <section class="section" id="highlights">
+      <h2>Highlights</h2>
+      <ul class="bullets">
+        <li>AI-assisted web research with xAI; consistent, credible source curation.</li>
+        <li>Results piped directly into the site; no server or file middlemen.</li>
+        <li>SQLite-backed project logging in Streamlit; optional local saves in browser.</li>
+        <li>Minimal, professional UX with embedded analysis and live charts.</li>
+      </ul>
+    </section>
+
+    <!-- Methods -->
+    <section class="section" id="methods">
+      <h2>Methods & credibility</h2>
+      <ul class="bullets">
+        <li>Analysis runs in Streamlit using the xAI Chat Completions API.</li>
+        <li>Summaries render as concise bullets; sources list includes domain and publication date.</li>
+        <li>Domain chart shows concentration of coverage (simple frequency by outlet).</li>
+        <li>Cost control: this page never sends API traffic; only the app does.</li>
+      </ul>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <h2>FAQ</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Does this page use my xAI credits?</h3>
+          <p>No. Only the Streamlit app triggers xAI calls.</p>
+        </div>
+        <div class="card">
+          <h3>Can I save projects?</h3>
+          <p>Yes—Streamlit saves to SQLite. You can also add lightweight local saves; they’ll show above.</p>
+        </div>
+        <div class="card">
+          <h3>What if the app won’t embed?</h3>
+          <p>Click “Open app.” Some hosts block iframes; deep link still works and results can post back here.</p>
+        </div>
       </div>
     </section>
 
-    <section class="wrap section grid" aria-labelledby="now-title">
-      <div class="span-8 card">
-        <h2 id="now-title">Now / Next</h2>
-        <ol style="margin:0; padding-left:18px">
-          <li>Set up a small SQLite database and seed sample tables.</li>
-          <li>Build a Streamlit page that reads from the DB and renders a basic chart.</li>
-          <li>Add a daily script to refresh data and commit results.</li>
-          <li>Write short notes explaining assumptions and limitations.</li>
-        </ol>
-      </div>
-      <div class="span-4 card">
-        <h2>Contact</h2>
-        <p class="muted">Have a dataset or idea?</p>
-        <p><a href="mailto:you@promptlyresumed.com">you@promptlyresumed.com</a></p>
-        <p class="note">This site is intentionally minimal. The value is the work.</p>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="wrap muted">© <span id="year"></span> Promptly Resumed</div>
-  </footer>
+    <footer>© promptlyresumed.com</footer>
+  </div>
 
   <script>
-    // Theme logic: read preference, respect system, allow toggle, remember choice.
-    (function(){
-      const root = document.documentElement;
-      const btn = document.getElementById('themeBtn');
-      const label = document.getElementById('themeLabel');
-      const icon = document.getElementById('themeIcon');
+    // ===== CONFIG =====
+    const APP_BASE = "https://spazedd-dataanalysis-app-pqclrv.streamlit.app"; // your app
+    const PAGE_PASSWORD = "logic1337"; // page gate
+    // ==================
 
-      const stored = localStorage.getItem('theme'); // 'light' | 'dark' | null
-      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-      function apply(theme) {
-        // theme: 'light' | 'dark' | 'auto'
-        root.setAttribute('data-theme', theme);
-        const effective = theme === 'auto' ? (prefersDark ? 'dark' : 'light') : theme;
-        if (effective === 'dark') {
-          icon.textContent = '🌙'; label.textContent = 'Dark'; btn.setAttribute('aria-pressed','true');
-        } else {
-          icon.textContent = '☀️'; label.textContent = 'Light'; btn.setAttribute('aria-pressed','false');
-        }
+    // Gate
+    const gate = document.getElementById("gate");
+    const root = document.getElementById("appRoot");
+    const pwInput = document.getElementById("pw");
+    const unlockBtn = document.getElementById("unlockBtn");
+    const gateError = document.getElementById("gateError");
+    function unlock(pass){
+      if (pass === PAGE_PASSWORD) {
+        try{ localStorage.setItem("pr_gate", "ok"); }catch{}
+        gate.style.display = "none";
+        root.style.display = "";
+      } else {
+        gateError.style.display = "block";
       }
+    }
+    try{ if(localStorage.getItem("pr_gate")==="ok"){ gate.style.display="none"; root.style.display=""; } }catch{}
+    unlockBtn.addEventListener("click",(e)=>{ e.preventDefault(); unlock(pwInput.value); });
+    pwInput.addEventListener("keydown",(e)=>{ if(e.key==="Enter") unlock(pwInput.value); });
 
-      // initialize
-      apply(stored ?? 'auto');
+    // Prompt → deep link + embed
+    const q = document.getElementById("q");
+    const appFrame = document.getElementById("appFrame");
+    const openApp = document.getElementById("openApp");
+    const copyLink = document.getElementById("copyLink");
+    function setLinks(){
+      const topic = encodeURIComponent((q.value||"").trim());
+      const href = topic ? `${APP_BASE}/?q=${topic}&origin=${encodeURIComponent(location.origin)}`
+                         : `${APP_BASE}/?origin=${encodeURIComponent(location.origin)}`;
+      openApp.href = href; openApp.target = "_blank";
+      copyLink.onclick = (e)=>{ e.preventDefault(); navigator.clipboard.writeText(href); copyLink.textContent="Copied"; setTimeout(()=>copyLink.textContent="Copy link",1000); };
+      appFrame.src = href + (href.includes("?")?"&":"?") + "embed=1";
+    }
+    q.addEventListener("input", setLinks); setLinks();
 
-      // toggle: light <-> dark (cycles through auto if user long-presses Shift)
-      btn.addEventListener('click', (e) => {
-        const current = root.getAttribute('data-theme');
-        let next = current === 'dark' ? 'light' : (current === 'light' ? 'dark' : (prefersDark ? 'light' : 'dark'));
-        // If user holds Shift, set to 'auto'
-        if (e.shiftKey) next = 'auto';
-        localStorage.setItem('theme', next === 'auto' ? 'auto' : next);
-        apply(next);
+    // Quick examples
+    document.querySelectorAll(".chip[data-prompt]").forEach(ch => {
+      ch.addEventListener("click", () => {
+        q.value = ch.getAttribute("data-prompt");
+        setLinks();
+        appFrame.scrollIntoView({behavior:"smooth", block:"start"});
       });
+    });
 
-      // keep in sync with system changes when in 'auto'
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-        const current = localStorage.getItem('theme') ?? 'auto';
-        if (current === 'auto') apply('auto');
+    // Results listener from Streamlit
+    const resultsBox = document.getElementById("resultsBox");
+    window.addEventListener("message",(event)=>{
+      try {
+        const appOrigin = new URL(APP_BASE).origin;
+        if (event.origin !== appOrigin) return;
+      } catch { return; }
+      const data = event.data || {};
+      if (data.type !== "pr_results" || !data.payload) return;
+      renderResults(data.payload);
+      trySaveRecent(data.payload);
+    });
+
+    function renderResults(p){
+      const topic = p?.topic || (q.value||"").trim();
+      const bullets = Array.isArray(p?.bullets) ? p.bullets : splitToBullets(p?.summary || "");
+      const list = Array.isArray(p?.results) ? p.results : [];
+      let html = "";
+      if (topic) html += `<h3 style="margin-top:0">${esc(topic)}</h3>`;
+      if (bullets.length){
+        html += `<ul class="bullets">`;
+        for (const b of bullets.slice(0,8)) html += `<li>${esc(b)}</li>`;
+        html += `</ul>`;
+      }
+      if (p?.charts?.domainCounts?.length){
+        const id = "chart_"+Date.now();
+        html += `<div class="chartBox"><canvas id="${id}" width="900" height="260"></canvas></div>`;
+        setTimeout(()=> drawBar(id, p.charts.domainCounts),0);
+      }
+      if (list.length){
+        html += `<h3 style="margin-top:10px">Credible sources</h3>
+                 <table class="table"><thead><tr><th>Title</th><th>Domain</th><th>Date</th></tr></thead><tbody>`;
+        for (const r of list){
+          const t = esc(r.title || r.url || "");
+          const d = esc(r.domain || "");
+          const dt = esc(r.date || "");
+          const u = r.url ? `<a href="${r.url}" target="_blank" rel="noopener">${t}</a>` : t;
+          html += `<tr><td>${u}</td><td>${d}</td><td>${dt}</td></tr>`;
+        }
+        html += `</tbody></table>`;
+      }
+      resultsBox.innerHTML = html || `<div class="muted">No results received.</div>`;
+    }
+
+    // Simple local “Recent projects”
+    function loadRecent(){ try { return JSON.parse(localStorage.getItem("pr_projects")||"[]"); } catch { return []; } }
+    function saveRecent(arr){ localStorage.setItem("pr_projects", JSON.stringify(arr)); }
+    function trySaveRecent(p){
+      const items = loadRecent();
+      const entry = {
+        title: p?.topic || (q.value||"").trim() || "Untitled",
+        ts: Date.now(),
+        summary: p?.summary || "",
+        results: (p?.results||[]).slice(0,6)
+      };
+      const i = items.findIndex(x => (x.title||"").toLowerCase() === entry.title.toLowerCase());
+      if (i>=0) items[i]=entry; else items.unshift(entry);
+      saveRecent(items.slice(0,8));
+      renderRecent();
+    }
+    function renderRecent(){
+      const grid = document.getElementById("projGrid");
+      const empty = document.getElementById("projEmpty");
+      const items = loadRecent();
+      grid.innerHTML = "";
+      empty.style.display = items.length ? "none" : "block";
+      items.slice(0,6).forEach(p=>{
+        const el = document.createElement("div");
+        el.className = "card";
+        const when = new Date(p.ts||Date.now()).toLocaleString();
+        el.innerHTML = `
+          <h3>${esc(p.title)}</h3>
+          <p class="muted">${when}</p>
+          ${p.summary ? `<p style="margin-top:6px">${esc(p.summary).slice(0,180)}...</p>` : ""}
+          ${(p.results||[]).length ? `<p class="muted" style="margin-top:6px">${p.results.length} sources</p>` : ""}
+          <div style="margin-top:8px"><a href="#results" class="link-btn" onclick='window.displayRecent(${JSON.stringify(p.title)})'>Open</a></div>
+        `;
+        grid.appendChild(el);
       });
+    }
+    window.displayRecent = (title)=>{
+      const items = loadRecent();
+      const p = items.find(x => (x.title||"").toLowerCase() === String(title).toLowerCase());
+      if (!p) return;
+      renderResults({topic:p.title, summary:p.summary, results:p.results});
+      document.getElementById("resultsBox").scrollIntoView({behavior:"smooth", block:"start"});
+    };
+    renderRecent();
 
-      // year
-      document.getElementById('year').textContent = new Date().getFullYear();
-    })();
+    // Helpers
+    function esc(s){ return String(s||"").replace(/[&<>"']/g,c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+    function splitToBullets(text){
+      const t = String(text||"").trim();
+      if(!t) return [];
+      return t.split(/(?<=\.)\s+/).map(x=>x.trim()).filter(Boolean).slice(0,6);
+    }
+    function drawBar(canvasId, pts){
+      try{
+        const el = document.getElementById(canvasId); if(!el||!pts||!pts.length) return;
+        const ctx = el.getContext('2d'); const W = el.width, H = el.height, pad = 30;
+        ctx.clearRect(0,0,W,H);
+        const max = Math.max(...pts.map(p=>p.count||0),1);
+        const bw = (W - pad*2) / pts.length;
+        ctx.strokeStyle = "#e5e7eb"; ctx.beginPath(); ctx.moveTo(pad,H-pad); ctx.lineTo(W-pad,H-pad); ctx.stroke();
+        pts.forEach((p,i)=>{
+          const x = pad + i*bw + 6;
+          const h = Math.round(((p.count||0)/max) * (H - pad*2));
+          ctx.fillStyle = "#111827";
+          ctx.fillRect(x, H-pad-h, Math.max(8,bw-12), h);
+          ctx.fillStyle = "#6b7280"; ctx.font = "10px Inter";
+          ctx.fillText(String(p.domain||"").slice(0,12), x, H - pad + 12);
+        });
+      }catch{}
+    }
   </script>
 </body>
 </html>
