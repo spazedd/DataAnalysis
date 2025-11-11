@@ -1,0 +1,1892 @@
+[
+  {
+    "id": 425,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_30y_200000_base",
+    "value": 1227.5347604066083,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"term_years\": 30, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 426,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_30y_200000_base",
+    "value": 241912.51374637894,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"term_years\": 30, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 427,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_40y_200000_base",
+    "value": 1131.2523828228657,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"term_years\": 40, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 428,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_40y_200000_base",
+    "value": 343001.1437549755,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"term_years\": 40, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 429,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_50y_200000_base",
+    "value": 1085.470106006853,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"term_years\": 50, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 430,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_50y_200000_base",
+    "value": 451282.0636041118,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"term_years\": 50, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 431,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_40_vs_30_200000_base",
+    "value": 96.28237758374257,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 432,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_50_vs_30_200000_base",
+    "value": 142.06465439975523,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 433,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_40_vs_30_200000_base",
+    "value": 101088.63000859658,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 434,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_50_vs_30_200000_base",
+    "value": 209369.54985773284,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 435,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_40_vs_30_pct_200000_base",
+    "value": 7.843556100346194,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 436,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_50_vs_30_pct_200000_base",
+    "value": 11.573167537243323,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 437,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_40_vs_30_pct_200000_base",
+    "value": 41.78726781971183,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 438,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_50_vs_30_pct_200000_base",
+    "value": 86.54763104865086,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 439,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_30y_300000_base",
+    "value": 1841.3021406099126,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"term_years\": 30, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 440,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_30y_300000_base",
+    "value": 362868.77061956853,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"term_years\": 30, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 441,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_40y_300000_base",
+    "value": 1696.8785742342984,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"term_years\": 40, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 442,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_40y_300000_base",
+    "value": 514501.71563246334,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"term_years\": 40, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 443,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_50y_300000_base",
+    "value": 1628.2051590102792,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"term_years\": 50, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 444,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_50y_300000_base",
+    "value": 676923.0954061674,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"term_years\": 50, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 445,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_40_vs_30_300000_base",
+    "value": 144.4235663756142,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 446,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_50_vs_30_300000_base",
+    "value": 213.0969815996334,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 447,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_40_vs_30_300000_base",
+    "value": 151632.9450128948,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 448,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_50_vs_30_300000_base",
+    "value": 314054.3247865989,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 449,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_40_vs_30_pct_300000_base",
+    "value": 7.843556100346216,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 450,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_50_vs_30_pct_300000_base",
+    "value": 11.573167537243357,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 451,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_40_vs_30_pct_300000_base",
+    "value": 41.7872678197118,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 452,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_50_vs_30_pct_300000_base",
+    "value": 86.54763104865073,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 453,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_30y_400000_base",
+    "value": 2455.0695208132165,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"term_years\": 30, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 454,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_30y_400000_base",
+    "value": 483825.0274927579,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"term_years\": 30, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 455,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_40y_400000_base",
+    "value": 2262.5047656457314,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"term_years\": 40, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 456,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_40y_400000_base",
+    "value": 686002.287509951,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"term_years\": 40, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 457,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_50y_400000_base",
+    "value": 2170.940212013706,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"term_years\": 50, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 458,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_50y_400000_base",
+    "value": 902564.1272082236,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"term_years\": 50, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 459,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_40_vs_30_400000_base",
+    "value": 192.56475516748515,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 460,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_50_vs_30_400000_base",
+    "value": 284.12930879951045,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 461,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_40_vs_30_400000_base",
+    "value": 202177.26001719316,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 462,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_50_vs_30_400000_base",
+    "value": 418739.0997154657,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 463,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_40_vs_30_pct_400000_base",
+    "value": 7.843556100346194,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 464,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_50_vs_30_pct_400000_base",
+    "value": 11.573167537243323,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 465,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_40_vs_30_pct_400000_base",
+    "value": 41.78726781971183,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 466,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_50_vs_30_pct_400000_base",
+    "value": 86.54763104865086,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 467,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_30y_600000_base",
+    "value": 3682.604281219825,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"term_years\": 30, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 468,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_30y_600000_base",
+    "value": 725737.5412391371,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"term_years\": 30, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 469,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_40y_600000_base",
+    "value": 3393.757148468597,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"term_years\": 40, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 470,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_40y_600000_base",
+    "value": 1029003.4312649267,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"term_years\": 40, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 471,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_50y_600000_base",
+    "value": 3256.4103180205584,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"term_years\": 50, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 472,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_50y_600000_base",
+    "value": 1353846.190812335,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"term_years\": 50, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 473,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_40_vs_30_600000_base",
+    "value": 288.8471327512284,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 474,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_50_vs_30_600000_base",
+    "value": 426.1939631992668,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 475,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_40_vs_30_600000_base",
+    "value": 303265.8900257896,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 476,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_50_vs_30_600000_base",
+    "value": 628108.6495731978,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 477,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_40_vs_30_pct_600000_base",
+    "value": 7.843556100346216,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 478,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_50_vs_30_pct_600000_base",
+    "value": 11.573167537243357,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 479,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_40_vs_30_pct_600000_base",
+    "value": 41.7872678197118,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 480,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_50_vs_30_pct_600000_base",
+    "value": 86.54763104865073,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 481,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_30y_800000_base",
+    "value": 4910.139041626433,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"term_years\": 30, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 482,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_30y_800000_base",
+    "value": 967650.0549855158,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"term_years\": 30, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 483,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_40y_800000_base",
+    "value": 4525.009531291463,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"term_years\": 40, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 484,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_40y_800000_base",
+    "value": 1372004.575019902,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"term_years\": 40, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 485,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_50y_800000_base",
+    "value": 4341.880424027412,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"term_years\": 50, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 486,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_50y_800000_base",
+    "value": 1805128.2544164471,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"term_years\": 50, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 487,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_40_vs_30_800000_base",
+    "value": 385.1295103349703,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 488,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_50_vs_30_800000_base",
+    "value": 568.2586175990209,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 489,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_40_vs_30_800000_base",
+    "value": 404354.5200343863,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 490,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_50_vs_30_800000_base",
+    "value": 837478.1994309314,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 491,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_40_vs_30_pct_800000_base",
+    "value": 7.843556100346194,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 492,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_50_vs_30_pct_800000_base",
+    "value": 11.573167537243323,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 493,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_40_vs_30_pct_800000_base",
+    "value": 41.78726781971183,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 494,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_50_vs_30_pct_800000_base",
+    "value": 86.54763104865086,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.0622, \"scenario\": \"base\"}"
+  },
+  {
+    "id": 495,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_30y_200000_plus1pct",
+    "value": 1360.2852916926697,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"term_years\": 30, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 496,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_30y_200000_plus1pct",
+    "value": 289702.70500936103,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"term_years\": 30, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 497,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_40y_200000_plus1pct",
+    "value": 1274.94907382426,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"term_years\": 40, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 498,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_40y_200000_plus1pct",
+    "value": 411975.5554356448,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"term_years\": 40, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 499,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_50y_200000_plus1pct",
+    "value": 1237.1649033444587,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"term_years\": 50, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 500,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_50y_200000_plus1pct",
+    "value": 542298.9420066753,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"term_years\": 50, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 501,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_40_vs_30_200000_plus1pct",
+    "value": 85.33621786840968,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 502,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_50_vs_30_200000_plus1pct",
+    "value": 123.12038834821101,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 503,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_40_vs_30_200000_plus1pct",
+    "value": 122272.85042628378,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 504,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_50_vs_30_200000_plus1pct",
+    "value": 252596.23699731426,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 505,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_40_vs_30_pct_200000_plus1pct",
+    "value": 6.273405909007634,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 506,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_50_vs_30_pct_200000_plus1pct",
+    "value": 9.051071058410564,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 507,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_40_vs_30_pct_200000_plus1pct",
+    "value": 42.20631989692083,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 508,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_50_vs_30_pct_200000_plus1pct",
+    "value": 87.19153553956365,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 509,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_30y_300000_plus1pct",
+    "value": 2040.4279375390042,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"term_years\": 30, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 510,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_30y_300000_plus1pct",
+    "value": 434554.05751404155,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"term_years\": 30, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 511,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_40y_300000_plus1pct",
+    "value": 1912.42361073639,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"term_years\": 40, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 512,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_40y_300000_plus1pct",
+    "value": 617963.3331534672,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"term_years\": 40, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 513,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_50y_300000_plus1pct",
+    "value": 1855.747355016688,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"term_years\": 50, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 514,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_50y_300000_plus1pct",
+    "value": 813448.4130100128,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"term_years\": 50, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 515,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_40_vs_30_300000_plus1pct",
+    "value": 128.0043268026143,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 516,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_50_vs_30_300000_plus1pct",
+    "value": 184.68058252231617,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 517,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_40_vs_30_300000_plus1pct",
+    "value": 183409.2756394256,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 518,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_50_vs_30_300000_plus1pct",
+    "value": 378894.3554959713,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 519,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_40_vs_30_pct_300000_plus1pct",
+    "value": 6.273405909007623,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 520,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_50_vs_30_pct_300000_plus1pct",
+    "value": 9.051071058410553,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 521,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_40_vs_30_pct_300000_plus1pct",
+    "value": 42.20631989692081,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 522,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_50_vs_30_pct_300000_plus1pct",
+    "value": 87.19153553956363,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 523,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_30y_400000_plus1pct",
+    "value": 2720.5705833853394,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"term_years\": 30, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 524,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_30y_400000_plus1pct",
+    "value": 579405.4100187221,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"term_years\": 30, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 525,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_40y_400000_plus1pct",
+    "value": 2549.89814764852,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"term_years\": 40, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 526,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_40y_400000_plus1pct",
+    "value": 823951.1108712896,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"term_years\": 40, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 527,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_50y_400000_plus1pct",
+    "value": 2474.3298066889174,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"term_years\": 50, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 528,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_50y_400000_plus1pct",
+    "value": 1084597.8840133506,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"term_years\": 50, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 529,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_40_vs_30_400000_plus1pct",
+    "value": 170.67243573681935,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 530,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_50_vs_30_400000_plus1pct",
+    "value": 246.24077669642202,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 531,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_40_vs_30_400000_plus1pct",
+    "value": 244545.70085256756,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 532,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_50_vs_30_400000_plus1pct",
+    "value": 505192.4739946285,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 533,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_40_vs_30_pct_400000_plus1pct",
+    "value": 6.273405909007634,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 534,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_50_vs_30_pct_400000_plus1pct",
+    "value": 9.051071058410564,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 535,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_40_vs_30_pct_400000_plus1pct",
+    "value": 42.20631989692083,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 536,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_50_vs_30_pct_400000_plus1pct",
+    "value": 87.19153553956365,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 537,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_30y_600000_plus1pct",
+    "value": 4080.8558750780085,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"term_years\": 30, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 538,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_30y_600000_plus1pct",
+    "value": 869108.1150280831,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"term_years\": 30, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 539,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_40y_600000_plus1pct",
+    "value": 3824.84722147278,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"term_years\": 40, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 540,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_40y_600000_plus1pct",
+    "value": 1235926.6663069343,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"term_years\": 40, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 541,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_50y_600000_plus1pct",
+    "value": 3711.494710033376,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"term_years\": 50, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 542,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_50y_600000_plus1pct",
+    "value": 1626896.8260200256,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"term_years\": 50, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 543,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_40_vs_30_600000_plus1pct",
+    "value": 256.0086536052286,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 544,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_50_vs_30_600000_plus1pct",
+    "value": 369.36116504463234,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 545,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_40_vs_30_600000_plus1pct",
+    "value": 366818.5512788512,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 546,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_50_vs_30_600000_plus1pct",
+    "value": 757788.7109919426,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 547,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_40_vs_30_pct_600000_plus1pct",
+    "value": 6.273405909007623,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 548,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_50_vs_30_pct_600000_plus1pct",
+    "value": 9.051071058410553,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 549,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_40_vs_30_pct_600000_plus1pct",
+    "value": 42.20631989692081,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 550,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_50_vs_30_pct_600000_plus1pct",
+    "value": 87.19153553956363,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 551,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_30y_800000_plus1pct",
+    "value": 5441.141166770679,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"term_years\": 30, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 552,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_30y_800000_plus1pct",
+    "value": 1158810.8200374441,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"term_years\": 30, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 553,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_40y_800000_plus1pct",
+    "value": 5099.79629529704,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"term_years\": 40, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 554,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_40y_800000_plus1pct",
+    "value": 1647902.2217425792,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"term_years\": 40, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 555,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_50y_800000_plus1pct",
+    "value": 4948.659613377835,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"term_years\": 50, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 556,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_50y_800000_plus1pct",
+    "value": 2169195.768026701,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"term_years\": 50, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 557,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_40_vs_30_800000_plus1pct",
+    "value": 341.3448714736387,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 558,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_50_vs_30_800000_plus1pct",
+    "value": 492.48155339284403,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 559,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_40_vs_30_800000_plus1pct",
+    "value": 489091.4017051351,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 560,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_50_vs_30_800000_plus1pct",
+    "value": 1010384.947989257,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 561,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_40_vs_30_pct_800000_plus1pct",
+    "value": 6.273405909007634,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 562,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_50_vs_30_pct_800000_plus1pct",
+    "value": 9.051071058410564,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 563,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_40_vs_30_pct_800000_plus1pct",
+    "value": 42.20631989692083,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 564,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_50_vs_30_pct_800000_plus1pct",
+    "value": 87.19153553956365,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.0722, \"scenario\": \"plus1pct\"}"
+  },
+  {
+    "id": 565,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_30y_200000_minus1pct",
+    "value": 1100.6940631795242,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"term_years\": 30, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 566,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_30y_200000_minus1pct",
+    "value": 196249.86274462874,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"term_years\": 30, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 567,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_40y_200000_minus1pct",
+    "value": 993.7147435016648,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"term_years\": 40, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 568,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_40y_200000_minus1pct",
+    "value": 276983.07688079914,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"term_years\": 40, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 569,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_50y_200000_minus1pct",
+    "value": 939.4760933886937,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"term_years\": 50, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 570,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_50y_200000_minus1pct",
+    "value": 363685.6560332163,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"term_years\": 50, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 571,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_40_vs_30_200000_minus1pct",
+    "value": 106.9793196778594,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 572,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_50_vs_30_200000_minus1pct",
+    "value": 161.21796979083047,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 573,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_40_vs_30_200000_minus1pct",
+    "value": 80733.2141361704,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 574,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_50_vs_30_200000_minus1pct",
+    "value": 167435.79328858753,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 575,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_40_vs_30_pct_200000_minus1pct",
+    "value": 9.719260170154199,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 576,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_50_vs_30_pct_200000_minus1pct",
+    "value": 14.646937344708444,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 577,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_40_vs_30_pct_200000_minus1pct",
+    "value": 41.13797228038063,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 578,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_50_vs_30_pct_200000_minus1pct",
+    "value": 85.31766134606897,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 200000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 579,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_30y_300000_minus1pct",
+    "value": 1651.0410947692865,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"term_years\": 30, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 580,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_30y_300000_minus1pct",
+    "value": 294374.79411694314,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"term_years\": 30, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 581,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_40y_300000_minus1pct",
+    "value": 1490.5721152524973,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"term_years\": 40, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 582,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_40y_300000_minus1pct",
+    "value": 415474.6153211987,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"term_years\": 40, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 583,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_50y_300000_minus1pct",
+    "value": 1409.2141400830408,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"term_years\": 50, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 584,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_50y_300000_minus1pct",
+    "value": 545528.4840498244,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"term_years\": 50, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 585,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_40_vs_30_300000_minus1pct",
+    "value": 160.4689795167892,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 586,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_50_vs_30_300000_minus1pct",
+    "value": 241.8269546862457,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 587,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_40_vs_30_300000_minus1pct",
+    "value": 121099.82120425557,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 588,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_50_vs_30_300000_minus1pct",
+    "value": 251153.68993288127,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 589,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_40_vs_30_pct_300000_minus1pct",
+    "value": 9.71926017015421,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 590,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_50_vs_30_pct_300000_minus1pct",
+    "value": 14.646937344708444,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 591,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_40_vs_30_pct_300000_minus1pct",
+    "value": 41.13797228038061,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 592,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_50_vs_30_pct_300000_minus1pct",
+    "value": 85.31766134606895,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 300000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 593,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_30y_400000_minus1pct",
+    "value": 2201.3881263590483,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"term_years\": 30, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 594,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_30y_400000_minus1pct",
+    "value": 392499.7254892575,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"term_years\": 30, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 595,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_40y_400000_minus1pct",
+    "value": 1987.4294870033295,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"term_years\": 40, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 596,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_40y_400000_minus1pct",
+    "value": 553966.1537615983,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"term_years\": 40, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 597,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_50y_400000_minus1pct",
+    "value": 1878.9521867773874,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"term_years\": 50, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 598,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_50y_400000_minus1pct",
+    "value": 727371.3120664326,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"term_years\": 50, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 599,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_40_vs_30_400000_minus1pct",
+    "value": 213.9586393557188,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 600,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_50_vs_30_400000_minus1pct",
+    "value": 322.43593958166093,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 601,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_40_vs_30_400000_minus1pct",
+    "value": 161466.4282723408,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 602,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_50_vs_30_400000_minus1pct",
+    "value": 334871.58657717507,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 603,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_40_vs_30_pct_400000_minus1pct",
+    "value": 9.719260170154199,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 604,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_50_vs_30_pct_400000_minus1pct",
+    "value": 14.646937344708444,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 605,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_40_vs_30_pct_400000_minus1pct",
+    "value": 41.13797228038063,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 606,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_50_vs_30_pct_400000_minus1pct",
+    "value": 85.31766134606897,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 400000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 607,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_30y_600000_minus1pct",
+    "value": 3302.082189538573,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"term_years\": 30, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 608,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_30y_600000_minus1pct",
+    "value": 588749.5882338863,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"term_years\": 30, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 609,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_40y_600000_minus1pct",
+    "value": 2981.1442305049945,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"term_years\": 40, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 610,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_40y_600000_minus1pct",
+    "value": 830949.2306423974,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"term_years\": 40, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 611,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_50y_600000_minus1pct",
+    "value": 2818.4282801660815,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"term_years\": 50, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 612,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_50y_600000_minus1pct",
+    "value": 1091056.9680996488,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"term_years\": 50, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 613,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_40_vs_30_600000_minus1pct",
+    "value": 320.9379590335784,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 614,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_50_vs_30_600000_minus1pct",
+    "value": 483.6539093724914,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 615,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_40_vs_30_600000_minus1pct",
+    "value": 242199.64240851114,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 616,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_50_vs_30_600000_minus1pct",
+    "value": 502307.37986576254,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 617,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_40_vs_30_pct_600000_minus1pct",
+    "value": 9.71926017015421,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 618,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_50_vs_30_pct_600000_minus1pct",
+    "value": 14.646937344708444,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 619,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_40_vs_30_pct_600000_minus1pct",
+    "value": 41.13797228038061,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 620,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_50_vs_30_pct_600000_minus1pct",
+    "value": 85.31766134606895,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 600000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 621,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_30y_800000_minus1pct",
+    "value": 4402.776252718097,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"term_years\": 30, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 622,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_30y_800000_minus1pct",
+    "value": 784999.450978515,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"term_years\": 30, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 623,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_40y_800000_minus1pct",
+    "value": 3974.858974006659,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"term_years\": 40, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 624,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_40y_800000_minus1pct",
+    "value": 1107932.3075231966,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"term_years\": 40, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 625,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_50y_800000_minus1pct",
+    "value": 3757.904373554775,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"term_years\": 50, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 626,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_total_50y_800000_minus1pct",
+    "value": 1454742.624132865,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"term_years\": 50, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 627,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_40_vs_30_800000_minus1pct",
+    "value": 427.9172787114376,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 628,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "monthly_savings_50_vs_30_800000_minus1pct",
+    "value": 644.8718791633219,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 629,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_40_vs_30_800000_minus1pct",
+    "value": 322932.8565446816,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 630,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_penalty_50_vs_30_800000_minus1pct",
+    "value": 669743.1731543501,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 631,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_40_vs_30_pct_800000_minus1pct",
+    "value": 9.719260170154199,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 632,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "pmt_reduction_50_vs_30_pct_800000_minus1pct",
+    "value": 14.646937344708444,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 633,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_40_vs_30_pct_800000_minus1pct",
+    "value": 41.13797228038063,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  },
+  {
+    "id": 634,
+    "project_key": "mortgage50_math",
+    "ts": "2025-11-11T01:00:08.882575",
+    "metric": "interest_increase_50_vs_30_pct_800000_minus1pct",
+    "value": 85.31766134606897,
+    "source": "fred+calc",
+    "meta_json": "{\"principal\": 800000, \"rate_decimal\": 0.052199999999999996, \"scenario\": \"minus1pct\"}"
+  }
+]
