@@ -1,183 +1,120 @@
-import os, json, sqlite3, time
+import os, json, sqlite3
 from datetime import datetime
 from urllib.parse import urlparse
 
+import requests
 import pandas as pd
 import streamlit as st
 import plotly.express as px
-import requests
 
-# -------------------- App config --------------------
+# ─────────────────────────────────────────────────────────────
+# App config
+# ─────────────────────────────────────────────────────────────
 st.set_page_config(page_title="Promptly Resumed — Research Lab", layout="wide")
-
-# -------------------- PASSWORD GATE FIRST --------------------
-if "unlocked" not in st.session_state:
-    st.session_state.unlocked = False
-
 st.title("Promptly Resumed — Research Lab")
-st.caption("SQL + Python + lightweight AI summaries. Gated to keep it focused.")
+st.caption("xAI-powered research with SQLite project logging and live results back to the site.")
 
-with st.expander("🔐 Access", expanded=not st.session_state.unlocked):
-    pw = st.text_input("Signal Key (Hint: logic + leet)", type="password")
-    if st.button("Unlock"):
-        if pw == "logic1337":
-            st.session_state.unlocked = True
-            st.balloons()
-        else:
-            st.error("Access Denied. The logic rejects you.")
+# ─────────────────────────────────────────────────────────────
+# Env / constants  (ONLY XAI_API_KEY is required)
+# ─────────────────────────────────────────────────────────────
+XAI_API_KEY = (os.getenv("XAI_API_KEY") or "").strip()
+XAI_API_BASE = "https://api.x.ai/v1"              # fixed default
+XAI_MODEL = "grok-4-0709"                          # fixed default
+DB_PATH = os.getenv("PR_DB_PATH", "research.db")   # local SQLite file
 
-if not st.session_state.unlocked:
-    st.stop()  # <-- nothing else runs until unlocked
+if not XAI_API_KEY:
+    st.error("Missing XAI_API_KEY in environment/secrets.")
+    st.stop()
 
-# -------------------- DB helpers (after gate) --------------------
-DB_PATH = os.getenv("PR_DB_PATH", "research.db")
-
+# ─────────────────────────────────────────────────────────────
+# SQLite connection and schema
+# ─────────────────────────────────────────────────────────────
 @st.cache_resource
 def get_conn():
-    conn = sqlite3.connect(DB_PATH, check_same_thread=False)
-    return conn
+    return sqlite3.connect(DB_PATH, check_same_thread=False)
 
 conn = get_conn()
 
-def ensure_schema(conn: sqlite3.Connection):
+def ensure_schema():
     cur = conn.cursor()
 
-    # robust names + no DEFAULT '{}' on TEXT for older SQLite builds
+    # Basic projects table (no exotic defaults; compatible on Streamlit Cloud)
     cur.execute("""
-        CREATE TABLE IF NOT EXISTS projects(
-            id INTEGER PRIMARY KEY,
-            proj_key TEXT UNIQUE,
-            name TEXT,
-            description TEXT,
-            enabled INTEGER DEFAULT 1,
-            automated INTEGER DEFAULT 0,
-            cadence TEXT,
-            params_json TEXT
-        )
+    CREATE TABLE IF NOT EXISTS projects(
+        id INTEGER PRIMARY KEY,
+        title TEXT UNIQUE,
+        tags TEXT,
+        notes TEXT,
+        created_at TEXT,
+        updated_at TEXT
+    )
     """)
 
+    # Log every analysis run (optionally attached to a project)
     cur.execute("""
-        CREATE TABLE IF NOT EXISTS datapoints(
-            id INTEGER PRIMARY KEY,
-            project_key TEXT,
-            ts TEXT,
-            metric TEXT,
-            value REAL,
-            source TEXT,
-            meta_json TEXT
-        )
+    CREATE TABLE IF NOT EXISTS searches(
+        id INTEGER PRIMARY KEY,
+        project_id INTEGER,
+        query TEXT,
+        result_json TEXT,
+        ts TEXT,
+        FOREIGN KEY(project_id) REFERENCES projects(id)
+    )
     """)
-
-    cur.execute("""
-        CREATE TABLE IF NOT EXISTS searches(
-            id INTEGER PRIMARY KEY,
-            query TEXT,
-            result_json TEXT,
-            ts TEXT
-        )
-    """)
-
-    # Migration: if an old 'projects' table had a 'key' column, copy to 'proj_key'
-    try:
-        cols = {r[1] for r in cur.execute("PRAGMA table_info(projects)").fetchall()}
-        if "key" in cols and "proj_key" in cols:
-            # fill proj_key if null
-            cur.execute("UPDATE projects SET proj_key = COALESCE(proj_key, key)")
-    except Exception:
-        pass
 
     conn.commit()
 
-ensure_schema(conn)
+ensure_schema()
 
-# -------------------- Sidebar: Admin (minimal but intact) --------------------
-st.sidebar.header("Admin")
-
-with st.sidebar.expander("Projects", expanded=True):
-    dfp = pd.read_sql_query(
-        "SELECT proj_key,name,enabled,automated,cadence,COALESCE(params_json,'{}') as params_json FROM projects ORDER BY name",
-        conn,
-    )
-    st.dataframe(dfp, use_container_width=True)
-
-    c1, c2 = st.columns(2)
-    with c1:
-        proj_key = st.text_input("Project key (short id)")
-        enabled = st.checkbox("Enabled", value=True)
-        automated = st.checkbox("Automated (scheduler ingests)", value=False)
-    with c2:
-        name = st.text_input("Name")
-        cadence = st.selectbox("Cadence", ["hourly", "daily", "weekly"], index=1)
-    desc = st.text_area("Description")
-    params = st.text_area("Params JSON (optional)", value="{}")
-
-    if st.button("Save Project"):
-        try:
-            json.loads(params)  # validate
-            conn.execute("""
-                INSERT INTO projects(proj_key,name,description,enabled,automated,cadence,params_json)
-                VALUES(?,?,?,?,?,?,?)
-                ON CONFLICT(proj_key) DO UPDATE SET
-                  name=excluded.name,
-                  description=excluded.description,
-                  enabled=excluded.enabled,
-                  automated=excluded.automated,
-                  cadence=excluded.cadence,
-                  params_json=excluded.params_json
-            """, (proj_key, name, desc, 1 if enabled else 0, 1 if automated else 0, cadence, params))
-            conn.commit()
-            st.success("Saved ✅")
-        except Exception as e:
-            st.error(f"Save failed: {e}")
-
-with st.expander("🔧 Debug", expanded=False):
-    st.write("DB path:", DB_PATH)
+# ─────────────────────────────────────────────────────────────
+# Utility: robust query param reader (works across Streamlit versions)
+# ─────────────────────────────────────────────────────────────
+def get_query_param(name: str, default: str = "") -> str:
     try:
-        pcount = pd.read_sql_query("SELECT COUNT(*) c FROM projects", conn)["c"].iloc[0]
-        dcount = pd.read_sql_query("SELECT COUNT(*) c FROM datapoints", conn)["c"].iloc[0]
-        scount = pd.read_sql_query("SELECT COUNT(*) c FROM searches", conn)["c"].iloc[0]
-        st.write(f"Projects={pcount}  Datapoints={dcount}  Searches={scount}")
-    except Exception as e:
-        st.error(e)
+        # New API (1.33+)
+        qp = st.query_params
+        if isinstance(qp, dict):
+            val = qp.get(name, [""])
+            if isinstance(val, list):
+                return (val[0] if val else "") or default
+            return val or default
+    except Exception:
+        pass
+    try:
+        # Legacy
+        params = st.experimental_get_query_params()
+        val = params.get(name, [""])
+        return (val[0] if val else "") or default
+    except Exception:
+        return default
 
-st.divider()
-
-# -------------------- Logic Lab: Search + Credibility --------------------
-st.subheader("Logic Lab — Credible Web Search")
-
-# Optional deep-link: ?q=...
-try:
-    qparam = st.query_params.get("q", [""])[0]  # Streamlit ≥1.31
-except Exception:
-    qparam = ""
-
-query = st.text_input("Enter Research Topic", value=qparam, placeholder="e.g., semiconductor export controls")
-run_clicked = st.button("Run Web Search", type="primary")
-
-XAI_API_KEY = (os.getenv("XAI_API_KEY") or os.getenv("XAI_API_TOKEN") or "").strip()
-XAI_API_BASE = os.getenv("XAI_API_BASE", "https://api.x.ai/v1").rstrip("/")
-XAI_MODEL = os.getenv("XAI_MODEL", "grok-4-0709")
-
-def call_xai(q: str) -> dict:
-    if not XAI_API_KEY:
-        raise RuntimeError("xAI API key missing (set XAI_API_KEY)")
-    headers = {"Authorization": f"Bearer {XAI_API_KEY}", "Content-Type": "application/json"}
+# ─────────────────────────────────────────────────────────────
+# xAI call
+# ─────────────────────────────────────────────────────────────
+def call_xai_web_search(topic: str) -> dict:
+    """
+    Calls xAI Chat Completions and expects JSON:
+      {"summary": str, "results":[{"title","url","domain","date","snippet"}]}
+    """
     system = (
         "You are a careful research assistant. Return STRICT JSON ONLY.\n"
         '{"summary": str, "results": [{"title": str, "url": str, "domain": str, "date": str, "snippet": str}]}\n'
-        "Prefer credible outlets; include ISO dates when available."
+        "Use credible outlets; include ISO dates when available. No extra prose."
     )
     payload = {
         "model": XAI_MODEL,
         "messages": [
             {"role": "system", "content": system},
-            {"role": "user", "content": f"Topic: {q}\nReturn JSON only."}
+            {"role": "user", "content": f"Topic: {topic}\nReturn JSON only."}
         ],
         "temperature": 0.2,
     }
+    headers = {"Authorization": f"Bearer {XAI_API_KEY}", "Content-Type": "application/json"}
     r = requests.post(f"{XAI_API_BASE}/chat/completions", headers=headers, data=json.dumps(payload), timeout=60)
     r.raise_for_status()
     content = r.json()["choices"][0]["message"]["content"]
+
+    # Parse safe JSON (unwrap fences if any)
     if isinstance(content, str):
         text = content.strip()
         if text.startswith("```"):
@@ -189,77 +126,263 @@ def call_xai(q: str) -> dict:
             data = json.loads(text)
         except Exception:
             data = {"summary": text, "results": []}
+    elif isinstance(content, dict):
+        data = content
     else:
-        data = content if isinstance(content, dict) else {"summary": "", "results": []}
+        data = {"summary": "", "results": []}
 
-    # Normalize
-    out = []
+    # Normalize result items
+    norm = []
     for r in data.get("results", []):
         url = (r.get("url") or "").strip()
         try:
-            dom = r.get("domain") or urlparse(url).hostname or ""
+            dom = r.get("domain") or (urlparse(url).hostname or "")
         except Exception:
             dom = r.get("domain") or ""
-        out.append({
+        norm.append({
             "title": (r.get("title") or "")[:200],
             "url": url,
             "domain": dom,
             "date": r.get("date") or "Recent",
             "snippet": (r.get("snippet") or "")[:600],
         })
-    data["results"] = out[:10]
+    data["results"] = norm[:10]
     return data
 
-if run_clicked and query.strip():
-    with st.spinner("Searching…"):
+# ─────────────────────────────────────────────────────────────
+# PostMessage bridge back to the parent website
+# ─────────────────────────────────────────────────────────────
+def send_results_back(results_dict: dict):
+    """
+    Posts results to the embedding site (index.html) using window.postMessage.
+    """
+    payload = json.dumps(results_dict, ensure_ascii=False)
+    st.components.v1.html(
+        f"""
+        <script>
+        try {{
+          if (window.parent) {{
+            window.parent.postMessage({{
+              type: "pr_results",
+              payload: {payload}
+            }}, "*");  // tighten by replacing "*" with your site origin if desired
+          }}
+        }} catch(e) {{ console.warn("postMessage failed", e); }}
+        </script>
+        """,
+        height=0
+    )
+
+# ─────────────────────────────────────────────────────────────
+# Sidebar: simple Projects manager
+# ─────────────────────────────────────────────────────────────
+st.sidebar.header("Projects")
+
+with st.sidebar.expander("New / Edit Project", expanded=True):
+    title = st.text_input("Title", key="p_title", placeholder="e.g., Semiconductor Export Controls")
+    tags  = st.text_input("Tags (comma-separated)", key="p_tags", placeholder="economy, policy, tech")
+    notes = st.text_area("Notes", key="p_notes", placeholder="Scope, assumptions, next steps…")
+    c1, c2 = st.columns(2)
+    with c1:
+        if st.button("Save / Update", use_container_width=True):
+            if not title.strip():
+                st.warning("Title is required.")
+            else:
+                now = datetime.utcnow().isoformat()
+                conn.execute("""
+                    INSERT INTO projects(title,tags,notes,created_at,updated_at)
+                    VALUES(?,?,?,?,?)
+                    ON CONFLICT(title) DO UPDATE SET
+                      tags=excluded.tags,
+                      notes=excluded.notes,
+                      updated_at=excluded.updated_at
+                """, (title.strip(), tags.strip(), notes.strip(), now, now))
+                conn.commit()
+                st.success("Project saved.")
+    with c2:
+        if st.button("Clear", use_container_width=True):
+            for k in ("p_title","p_tags","p_notes"):
+                if k in st.session_state: del st.session_state[k]
+            st.experimental_rerun()
+
+projects_df = pd.read_sql_query(
+    "SELECT id, title, tags, notes, created_at, updated_at FROM projects ORDER BY updated_at DESC NULLS LAST",
+    conn
+)
+if projects_df.empty:
+    st.sidebar.caption("No projects yet.")
+else:
+    pick = st.sidebar.selectbox("Open project", ["—"] + projects_df["title"].tolist())
+    if pick and pick != "—":
+        row = projects_df[projects_df["title"] == pick].iloc[0]
+        st.sidebar.write(f"**Tags:** {row['tags'] or '-'}")
+        st.sidebar.write(f"**Updated:** {row['updated_at'] or '-'}")
+        c1, c2 = st.sidebar.columns(2)
+        with c1:
+            if st.button("Load to editor"):
+                st.session_state["p_title"] = row["title"]
+                st.session_state["p_tags"]  = row["tags"]
+                st.session_state["p_notes"] = row["notes"]
+                st.experimental_rerun()
+        with c2:
+            if st.button("Delete project"):
+                conn.execute("DELETE FROM projects WHERE id=?", (int(row["id"]),))
+                conn.commit()
+                st.experimental_rerun()
+
+# ─────────────────────────────────────────────────────────────
+# Main: Research Console
+# ─────────────────────────────────────────────────────────────
+st.divider()
+st.subheader("Research Console")
+
+topic_prefill = get_query_param("q", "")
+origin_hint = get_query_param("origin", "")  # optional, for future origin checks
+
+topic = st.text_input(
+    "Research Topic",
+    value=topic_prefill,
+    placeholder="e.g., 50-year mortgages impact; semiconductor export controls"
+)
+
+colA, colB = st.columns([1, 2])
+with colA:
+    run = st.button("Run Web Search (xAI)", type="primary")
+with colB:
+    link_title = st.text_input("Attach to Project (optional: exact project title)")
+
+result_obj = None
+
+if run:
+    if not topic.strip():
+        st.warning("Enter a topic first.")
+    else:
+        with st.spinner("Querying xAI and assembling credible sources…"):
+            try:
+                result_obj = call_xai_web_search(topic.strip())
+            except Exception as e:
+                st.error(f"xAI error: {e}")
+                result_obj = {"summary": "", "results": []}
+
+        # Persist the run
         try:
-            result = call_xai(query.strip())
+            project_id = None
+            if link_title.strip():
+                row = pd.read_sql_query(
+                    "SELECT id FROM projects WHERE title = ? LIMIT 1",
+                    conn,
+                    params=[link_title.strip()]
+                )
+                if not row.empty:
+                    project_id = int(row["id"].iloc[0])
+            conn.execute(
+                "INSERT INTO searches (project_id, query, result_json, ts) VALUES (?,?,?,?)",
+                (project_id, topic.strip(), json.dumps(result_obj, ensure_ascii=False), datetime.utcnow().isoformat())
+            )
+            conn.commit()
         except Exception as e:
-            st.error(f"xAI search error: {e}")
-            result = {"summary": "", "results": []}
+            st.error(f"DB insert failed: {e}")
 
-    st.subheader("AI Summary")
-    st.write(result.get("summary", "No summary."))
+        # Build simple domain frequency for the site chart
+        domains = [x.get("domain","") for x in result_obj.get("results", []) if x.get("domain")]
+        if domains:
+            counts_df = pd.Series(domains).value_counts().reset_index()
+            counts_df.columns = ["domain","count"]
+            domain_counts = counts_df.to_dict(orient="records")
+        else:
+            domain_counts = []
 
-    st.subheader("Credible Sources")
-    for r in result.get("results", []):
-        with st.expander(r["title"][:80] or r["url"]):
-            st.write(f"**Source**: [{r['domain']}]({r['url']})")
-            st.write(f"**Published**: {r.get('date','Recent')}")
-            st.write(r.get("snippet","") or "_No snippet_")
+        # Post back to the parent site (iframe host)
+        send_results_back({
+            "topic": topic.strip(),
+            "summary": result_obj.get("summary",""),
+            "results": result_obj.get("results", [])[:10],
+            "charts": {"domainCounts": domain_counts}
+        })
 
-    # Save to DB
-    try:
-        conn.execute(
-            "INSERT INTO searches (query, result_json, ts) VALUES (?,?,?)",
-            (query.strip(), json.dumps(result, ensure_ascii=False), datetime.utcnow().isoformat())
-        )
-        conn.commit()
-    except Exception as e:
-        st.error(f"DB insert failed: {e}")
+# ─────────────────────────────────────────────────────────────
+# Results in-app (so it's useful even standalone)
+# ─────────────────────────────────────────────────────────────
+st.divider()
+st.subheader("Results")
 
-# -------------------- Minimal recent-activity chart --------------------
-st.subheader("Recent Activity")
-df = pd.read_sql_query("SELECT id, query, result_json, ts FROM searches ORDER BY ts DESC LIMIT 50", conn)
-if not df.empty:
-    rows = []
-    for _, row in df.iterrows():
+if not result_obj:
+    # If this is a fresh load, show last run (if any)
+    recent = pd.read_sql_query("SELECT query, result_json, ts FROM searches ORDER BY ts DESC LIMIT 1", conn)
+    if not recent.empty:
+        topic = recent["query"].iloc[0]
         try:
-            r = json.loads(row["result_json"])
+            result_obj = json.loads(recent["result_json"].iloc[0])
         except Exception:
-            r = {}
-        for it in r.get("results", []):
-            dom = it.get("domain") or ""
-            if dom:
-                rows.append({"domain": dom})
-    dfd = pd.DataFrame(rows)
-    if not dfd.empty:
-        top = dfd["domain"].value_counts().head(10).reset_index()
-        top.columns = ["domain", "count"]
-        fig = px.bar(top, x="domain", y="count", title="Top domains (last 50 searches)")
+            result_obj = {"summary": "", "results": []}
+
+if result_obj:
+    if result_obj.get("summary"):
+        st.markdown("**AI Summary**")
+        st.write(result_obj["summary"])
+
+    st.markdown("**Credible Sources**")
+    for r in result_obj.get("results", []):
+        title = r.get("title") or r.get("url") or "(untitled)"
+        with st.expander(title[:90]):
+            url = r.get("url","")
+            dom = r.get("domain","")
+            dt  = r.get("date","Recent")
+            st.write(f"**Source**: [{dom}]({url})")
+            st.write(f"**Published**: {dt}")
+            if r.get("snippet"):
+                st.write(r["snippet"])
+
+    # Domain distribution chart
+    domains = [x.get("domain","") for x in result_obj.get("results", []) if x.get("domain")]
+    if domains:
+        df = pd.Series(domains).value_counts().reset_index()
+        df.columns = ["domain", "count"]
+        fig = px.bar(df.head(10), x="domain", y="count", title="Top Domains")
         st.plotly_chart(fig, use_container_width=True)
 else:
-    st.caption("No searches logged yet.")
+    st.caption("No results yet. Run a search above.")
 
+# ─────────────────────────────────────────────────────────────
+# History & Export
+# ─────────────────────────────────────────────────────────────
 st.divider()
-st.caption("Gated Logic Lab • xAI-powered summaries • SQLite logging • Plotly charts")
+st.subheader("History & Export")
+
+hist = pd.read_sql_query("""
+    SELECT s.id, s.query, s.ts, p.title as project_title
+    FROM searches s
+    LEFT JOIN projects p ON s.project_id = p.id
+    ORDER BY s.ts DESC
+    LIMIT 50
+""", conn)
+
+if not hist.empty:
+    st.dataframe(hist, use_container_width=True)
+    md_lines = ["# Research Highlights", ""]
+    for _, row in hist.iterrows():
+        q = row["query"]
+        ts = row["ts"]
+        ptitle = row["project_title"] or ""
+        md_lines.append(f"- **{q}** — {ts}{' — Project: ' + ptitle if ptitle else ''}")
+    md_blob = "\n".join(md_lines)
+    st.download_button(
+        "Download Highlights.md",
+        data=md_blob.encode("utf-8"),
+        file_name="Highlights.md",
+        mime="text/markdown",
+    )
+else:
+    st.caption("No search history yet.")
+
+# ─────────────────────────────────────────────────────────────
+# Diagnostics
+# ─────────────────────────────────────────────────────────────
+with st.expander("Diagnostics", expanded=False):
+    st.write("DB:", DB_PATH)
+    try:
+        n_p = pd.read_sql_query("SELECT COUNT(*) c FROM projects", conn)["c"].iloc[0]
+        n_s = pd.read_sql_query("SELECT COUNT(*) c FROM searches", conn)["c"].iloc[0]
+        st.write(f"Projects: {n_p}  •  Searches: {n_s}")
+    except Exception as e:
+        st.error(e)
