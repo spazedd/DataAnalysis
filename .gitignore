@@ -1,0 +1,5 @@
+# Streamlit / local
+research.db
+__pycache__/
+*.pyc
+.DS_Store
