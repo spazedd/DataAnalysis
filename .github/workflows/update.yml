@@ -1,9 +1,7 @@
 name: PromptlyResumed Auto Ingest
 
 on:
-  schedule:
-    # Runs every day at 11 PM Pacific (07:00 UTC)
-  workflow_dispatch: {}   # allows manual runs
+  workflow_dispatch: {}   # manual runs only
 
 permissions:
   contents: write
@@ -39,8 +37,9 @@ jobs:
           pwd
           ls -la
 
-      # Your xAI updater (optional but kept)
+      # Optional: run only if XAI_API_KEY is set
       - name: Run updater (xAI only)
+        if: ${{ secrets.XAI_API_KEY != '' }}
         env:
           PR_DB_PATH: research.db
           XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
