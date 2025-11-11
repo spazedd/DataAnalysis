@@ -3,7 +3,6 @@ name: PromptlyResumed Auto Ingest
 on:
   schedule:
     # Runs every day at 11 PM Pacific (07:00 UTC)
-    - cron: "0 7 * * *"
   workflow_dispatch: {}   # allows manual runs
 
 permissions:
