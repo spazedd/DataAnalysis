@@ -2,4 +2,3 @@ streamlit
 pandas
 requests
 plotly
-python-dotenv
