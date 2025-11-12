@@ -1,0 +1,31 @@
+topics:
+  - ai safety
+  - multimodal
+  - efficient training
+  - brain development
+  - neuroscience
+  - cardiology
+  - metabolic health
+  - longevity
+  - public health
+  - statistics
+  - causal inference
+  - medical imaging
+  - clinical trials
+sources_allowlist:
+  - arxiv.org
+  - pubmed.ncbi.nlm.nih.gov
+  - biorxiv.org
+  - medrxiv.org
+  - nature.com
+  - science.org
+  - who.int
+  - nejm.org
+  - thelancet.com
+  - jamanetwork.com
+boost:
+  recency_days: 21
+  allow_preprints: true
+limit:
+  per_source: 12
+  total: 30
