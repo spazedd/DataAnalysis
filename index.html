@@ -1,344 +1,121 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Promptly Resumed — Research Portal</title>
+  <title>Promptly Resumed — Research Lab</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light dark" />
   <meta name="theme-color" content="#0f1011" />
-  <meta name="description" content="Type a prompt, view the Streamlit app inside the page, and see AI results below—clean and minimal." />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <meta name="description" content="SQL + Python + lightweight AI summaries. Gated research portal with xAI and Streamlit." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter,system-ui,-apple-system,sans-serif;background:#fff;color:#111827;line-height:1.55;font-size:16px}
-    a{color:#2563eb;text-decoration:none} a:hover{color:#1d4ed8;text-decoration:underline}
-    .wrap{max-width:1200px;margin:0 auto;padding:20px}
-
-    /* Gate */
-    .gate{position:fixed;inset:0;background:#0b1220;color:#e5e7eb;display:flex;align-items:center;justify-content:center;z-index:10000}
-    .gate-inner{width:100%;max-width:380px;background:#0f172a;border:1px solid #1f2937;border-radius:12px;padding:18px}
-    .gate h2{font-weight:600;margin-bottom:6px}
-    .gate p{color:#94a3b8;margin:6px 0 12px}
-    .gate input{width:100%;font-size:16px;padding:12px 14px;border-radius:10px;border:1px solid #334155;background:#0b1020;color:#e5e7eb}
-    .gate .btn{display:inline-block;margin-top:10px;border:1px solid #334155;border-radius:10px;padding:10px 14px;color:#e5e7eb}
-    .gate .btn:hover{background:#e5e7eb;color:#0b1020;border-color:#e5e7eb}
-
-    /* Header */
-    header{padding:6px 0 14px;border-bottom:1px solid #e5e7eb;margin-bottom:12px}
-    .brand{font-size:18px;font-weight:600}
-
-    /* Two-column */
-    .grid{display:grid;grid-template-columns:280px 1fr;gap:16px}
-    @media (max-width:900px){.grid{grid-template-columns:1fr}}
-
-    /* Panels */
-    .panel,.viewer,.section{border:1px solid #e5e7eb;border-radius:10px;background:#fff}
-    .panel{padding:14px}
-    .viewer{overflow:hidden}
-    .section{padding:14px;margin-top:16px}
-    .section h2{font-size:18px;font-weight:600;margin-bottom:6px}
-    .muted{color:#6b7280}
-
-    /* Inputs */
-    .label{font-size:12px;text-transform:uppercase;color:#6b7280;letter-spacing:.06em;margin-bottom:6px}
-    .prompt{width:100%;font-size:18px;padding:14px 16px;border:1px solid #d1d5db;border-radius:10px;background:#f9fafb;color:#111}
-    .prompt:focus{border-color:#111;background:#fff;outline:none}
-    .hint{color:#6b7280;font-size:13px;margin-top:8px}
-    .tiny-actions{display:flex;gap:8px;margin-top:10px}
-    .link-btn{font-size:14px;border:1px solid #e5e7eb;border-radius:10px;padding:8px 12px;color:#111}
-    .link-btn:hover{background:#111;color:#fff;border-color:#111}
-
-    iframe{display:block;width:100%;height:560px;border:0}
-
-    /* Results */
-    .results{margin-top:12px;border:1px solid #e5e7eb;border-radius:10px;padding:14px}
-    .results h3{font-size:16px;font-weight:600;margin:6px 0}
-    .bullets{margin:6px 0 6px 16px}
-    .bullets li{margin:4px 0}
-    .table{width:100%;border-collapse:collapse;margin-top:8px}
-    .table th,.table td{padding:8px 10px;border-bottom:1px solid #e5e7eb;text-align:left}
-    .chartBox{border:1px solid #e5e7eb;border-radius:10px;padding:8px;margin-top:8px}
-
-    /* Extras */
-    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-    .chip{padding:6px 10px;border:1px solid #e5e7eb;border-radius:999px;font-size:13px;color:#374151;background:#fafafa;cursor:pointer}
-    .chip:hover{background:#eef2ff;border-color:#c7d2fe}
-
-    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-    .card{border:1px solid #e5e7eb;border-radius:10px;padding:12px}
-    .card h3{font-size:15px;margin-bottom:4px}
-    .card p{color:#6b7280;font-size:14px}
-
-    @media (max-width:900px){.cards{grid-template-columns:1fr}}
-    footer{border-top:1px solid #e5e7eb;margin-top:24px;padding:16px 0;color:#6b7280;text-align:center}
+    body{font-family:Inter,system-ui,-apple-system,sans-serif;background:#fff;color:#111827;margin:0;line-height:1.55}
+    header{padding:20px;border-bottom:1px solid #e5e7eb;text-align:center}
+    h1{font-size:28px;margin:0;font-weight:600}
+    .grid{display:grid;grid-template-columns:280px 1fr;gap:16px;padding:20px;max-width:1200px;margin:auto}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+    .panel{border:1px solid #e5e7eb;border-radius:10px;padding:16px}
+    input{width:100%;padding:14px;border:1px solid #d1d5db;border-radius:8px;font-size:16px}
+    .row{margin-top:10px;display:flex;gap:10px}
+    .btn{border:1px solid #e5e7eb;border-radius:8px;padding:10px 14px;text-decoration:none;color:#111}
+    .btn:hover{background:#111;color:#fff;border-color:#111}
+    iframe{width:100%;height:560px;border:1px solid #e5e7eb;border-radius:10px}
+    footer{text-align:center;padding:20px;color:#6b7280;font-size:14px;border-top:1px solid #e5e7eb;margin-top:20px}
+    .gate{position:fixed;inset:0;background:#0b1220;color:#e5e7eb;display:flex;align-items:center;justify-content:center;z-index:9999}
+    .gate-inner{background:#0f172a;padding:20px;border-radius:12px;width:90%;max-width:360px}
+    .gate h2{margin:0 0 6px;font-weight:600}
+    .gate input{width:100%;padding:10px;border-radius:8px;border:1px solid #334155;background:#0b1020;color:#e5e7eb}
+    .gate .btn{display:inline-block;margin-top:12px;border:1px solid #334155;border-radius:8px;padding:8px 12px;color:#e5e7eb;text-decoration:none}
+    .gate .btn:hover{background:#e5e7eb;color:#0b1220}
   </style>
 </head>
 <body>
-  <!-- Password Gate -->
   <div class="gate" id="gate">
     <div class="gate-inner">
-      <h2>Promptly Resumed — Access</h2>
-      <p>Enter the site password to continue.</p>
-      <input id="pw" type="password" placeholder="Site password" />
+      <h2>Access Required</h2>
+      <p>Enter the site password to continue</p>
+      <input id="pw" type="password" placeholder="Password" />
       <a id="unlockBtn" class="btn" href="#">Unlock</a>
       <p id="gateError" style="color:#fca5a5;display:none;margin-top:8px">Incorrect password</p>
     </div>
   </div>
 
-  <div class="wrap" id="appRoot" style="display:none">
-    <header>
-      <div class="brand">Promptly Resumed — Research</div>
-    </header>
-
-    <!-- Main working area -->
-    <div class="grid">
-      <!-- Left: Prompt -->
-      <aside class="panel">
-        <div class="label">Prompt</div>
-        <input id="q" class="prompt" type="text" placeholder="e.g., semiconductor export controls impact" />
-        <p class="hint">Type your topic. The app loads on the right; run analysis there. Results show below.</p>
-        <div class="tiny-actions">
-          <a id="openApp" class="link-btn" href="#" rel="noopener">Open app</a>
-          <a id="copyLink" class="link-btn" href="#" rel="noopener">Copy link</a>
-        </div>
-
-        <div class="section" style="margin-top:12px">
-          <h2>Quick examples</h2>
-          <div class="chips">
-            <span class="chip" data-prompt="50-year mortgages macro impact">50-year mortgages</span>
-            <span class="chip" data-prompt="U.S. semiconductor export controls 2024–2025">Chip export controls</span>
-            <span class="chip" data-prompt="Fentanyl trafficking routes and interdiction efficacy">Fentanyl routes</span>
-            <span class="chip" data-prompt="State-level budget surpluses and spending priorities">State surpluses</span>
-            <span class="chip" data-prompt="EV adoption vs grid reliability trade-offs">EVs & grid</span>
-          </div>
-        </div>
-      </aside>
-
-      <!-- Right: App + Results -->
-      <section>
-        <div class="viewer">
-          <iframe id="appFrame" title="Research App"></iframe>
-        </div>
-        <div class="results" id="resultsBox">
-          <div class="muted">No results yet. Run analysis in the app.</div>
-        </div>
-      </section>
-    </div>
-
-    <!-- Recent Projects -->
-    <section class="section" id="recent">
-      <h2>Recent projects</h2>
-      <div id="projGrid" class="cards"></div>
-      <p class="muted" id="projEmpty" style="display:none;margin-top:6px">No local projects yet. Save from the app or this page and they’ll appear here.</p>
-    </section>
-
-    <!-- Highlights -->
-    <section class="section" id="highlights">
-      <h2>Highlights</h2>
-      <ul class="bullets">
-        <li>AI-assisted web research with xAI; consistent, credible source curation.</li>
-        <li>Results piped directly into the site; no server or file middlemen.</li>
-        <li>SQLite-backed project logging in Streamlit; optional local saves in browser.</li>
-        <li>Minimal, professional UX with embedded analysis and live charts.</li>
-      </ul>
-    </section>
-
-    <!-- Methods -->
-    <section class="section" id="methods">
-      <h2>Methods & credibility</h2>
-      <ul class="bullets">
-        <li>Analysis runs in Streamlit using the xAI Chat Completions API.</li>
-        <li>Summaries render as concise bullets; sources list includes domain and publication date.</li>
-        <li>Domain chart shows concentration of coverage (simple frequency by outlet).</li>
-        <li>Cost control: this page never sends API traffic; only the app does.</li>
-      </ul>
-    </section>
-
-    <!-- FAQ -->
-    <section class="section" id="faq">
-      <h2>FAQ</h2>
-      <div class="cards">
-        <div class="card">
-          <h3>Does this page use my xAI credits?</h3>
-          <p>No. Only the Streamlit app triggers xAI calls.</p>
-        </div>
-        <div class="card">
-          <h3>Can I save projects?</h3>
-          <p>Yes—Streamlit saves to SQLite. You can also add lightweight local saves; they’ll show above.</p>
-        </div>
-        <div class="card">
-          <h3>What if the app won’t embed?</h3>
-          <p>Click “Open app.” Some hosts block iframes; deep link still works and results can post back here.</p>
-        </div>
+  <header><h1>Promptly Resumed — Research Lab</h1></header>
+  <div class="grid" id="main" style="display:none">
+    <aside class="panel">
+      <h3>Research Prompt</h3>
+      <input id="q" type="text" placeholder="e.g. Semiconductor export controls" />
+      <div class="row">
+        <a id="openApp" class="btn" href="#" rel="noopener">Open in App</a>
+        <a id="copyLink" class="btn" href="#" rel="noopener">Copy link</a>
       </div>
-    </section>
+    </aside>
 
-    <footer>© promptlyresumed.com</footer>
+    <section class="panel">
+      <iframe id="appFrame" title="Streamlit App"></iframe>
+      <div id="resultsBox" style="margin-top:10px;color:#6b7280">Results will appear here…</div>
+    </section>
   </div>
 
+  <footer>© promptlyresumed.com</footer>
+
   <script>
-    // ===== CONFIG =====
-    const APP_BASE = "https://spazedd-dataanalysis-app-pqclrv.streamlit.app"; // your app
-    const PAGE_PASSWORD = "logic1337"; // page gate
-    // ==================
+    const PAGE_PASSWORD = "logic1337";
+    const APP_BASE = "https://spazedd-dataanalysis-app-pqclrv.streamlit.app";
 
-    // Gate
-    const gate = document.getElementById("gate");
-    const root = document.getElementById("appRoot");
-    const pwInput = document.getElementById("pw");
-    const unlockBtn = document.getElementById("unlockBtn");
-    const gateError = document.getElementById("gateError");
-    function unlock(pass){
-      if (pass === PAGE_PASSWORD) {
-        try{ localStorage.setItem("pr_gate", "ok"); }catch{}
-        gate.style.display = "none";
-        root.style.display = "";
-      } else {
-        gateError.style.display = "block";
-      }
+    // Password gate
+    const gate=document.getElementById("gate");
+    const main=document.getElementById("main");
+    const pw=document.getElementById("pw");
+    const unlock=document.getElementById("unlockBtn");
+    const err=document.getElementById("gateError");
+    function unlockSite(val){
+      if(val===PAGE_PASSWORD){
+        gate.style.display="none"; main.style.display="";
+        localStorage.setItem("pr_gate","ok");
+      }else{err.style.display="block";}
     }
-    try{ if(localStorage.getItem("pr_gate")==="ok"){ gate.style.display="none"; root.style.display=""; } }catch{}
-    unlockBtn.addEventListener("click",(e)=>{ e.preventDefault(); unlock(pwInput.value); });
-    pwInput.addEventListener("keydown",(e)=>{ if(e.key==="Enter") unlock(pwInput.value); });
+    try{if(localStorage.getItem("pr_gate")==="ok"){gate.style.display="none";main.style.display="";}}catch{}
+    unlock.addEventListener("click",e=>{e.preventDefault();unlockSite(pw.value);});
+    pw.addEventListener("keydown",e=>{if(e.key==="Enter")unlockSite(pw.value);});
 
-    // Prompt → deep link + embed
-    const q = document.getElementById("q");
-    const appFrame = document.getElementById("appFrame");
-    const openApp = document.getElementById("openApp");
-    const copyLink = document.getElementById("copyLink");
-    function setLinks(){
-      const topic = encodeURIComponent((q.value||"").trim());
-      const href = topic ? `${APP_BASE}/?q=${topic}&origin=${encodeURIComponent(location.origin)}`
-                         : `${APP_BASE}/?origin=${encodeURIComponent(location.origin)}`;
-      openApp.href = href; openApp.target = "_blank";
-      copyLink.onclick = (e)=>{ e.preventDefault(); navigator.clipboard.writeText(href); copyLink.textContent="Copied"; setTimeout(()=>copyLink.textContent="Copy link",1000); };
-      appFrame.src = href + (href.includes("?")?"&":"?") + "embed=1";
+    // App linking
+    const q=document.getElementById("q");
+    const openApp=document.getElementById("openApp");
+    const copyLink=document.getElementById("copyLink");
+    const frame=document.getElementById("appFrame");
+    function updateLinks(){
+      const topic=encodeURIComponent((q.value||"").trim());
+      const href=topic?`${APP_BASE}/?q=${topic}&origin=${encodeURIComponent(location.origin)}`:`${APP_BASE}/?origin=${encodeURIComponent(location.origin)}`;
+      openApp.href=href;openApp.target="_blank";
+      copyLink.onclick=(e)=>{e.preventDefault();navigator.clipboard.writeText(href);copyLink.textContent="Copied";setTimeout(()=>copyLink.textContent="Copy link",1000);};
+      frame.src=href+(href.includes("?")?"&":"?")+"embed=1";
     }
-    q.addEventListener("input", setLinks); setLinks();
+    q.addEventListener("input",updateLinks);updateLinks();
 
-    // Quick examples
-    document.querySelectorAll(".chip[data-prompt]").forEach(ch => {
-      ch.addEventListener("click", () => {
-        q.value = ch.getAttribute("data-prompt");
-        setLinks();
-        appFrame.scrollIntoView({behavior:"smooth", block:"start"});
-      });
-    });
-
-    // Results listener from Streamlit
-    const resultsBox = document.getElementById("resultsBox");
-    window.addEventListener("message",(event)=>{
-      try {
-        const appOrigin = new URL(APP_BASE).origin;
-        if (event.origin !== appOrigin) return;
-      } catch { return; }
-      const data = event.data || {};
-      if (data.type !== "pr_results" || !data.payload) return;
-      renderResults(data.payload);
-      trySaveRecent(data.payload);
-    });
-
-    function renderResults(p){
-      const topic = p?.topic || (q.value||"").trim();
-      const bullets = Array.isArray(p?.bullets) ? p.bullets : splitToBullets(p?.summary || "");
-      const list = Array.isArray(p?.results) ? p.results : [];
-      let html = "";
-      if (topic) html += `<h3 style="margin-top:0">${esc(topic)}</h3>`;
-      if (bullets.length){
-        html += `<ul class="bullets">`;
-        for (const b of bullets.slice(0,8)) html += `<li>${esc(b)}</li>`;
-        html += `</ul>`;
-      }
-      if (p?.charts?.domainCounts?.length){
-        const id = "chart_"+Date.now();
-        html += `<div class="chartBox"><canvas id="${id}" width="900" height="260"></canvas></div>`;
-        setTimeout(()=> drawBar(id, p.charts.domainCounts),0);
-      }
-      if (list.length){
-        html += `<h3 style="margin-top:10px">Credible sources</h3>
-                 <table class="table"><thead><tr><th>Title</th><th>Domain</th><th>Date</th></tr></thead><tbody>`;
-        for (const r of list){
-          const t = esc(r.title || r.url || "");
-          const d = esc(r.domain || "");
-          const dt = esc(r.date || "");
-          const u = r.url ? `<a href="${r.url}" target="_blank" rel="noopener">${t}</a>` : t;
-          html += `<tr><td>${u}</td><td>${d}</td><td>${dt}</td></tr>`;
-        }
-        html += `</tbody></table>`;
-      }
-      resultsBox.innerHTML = html || `<div class="muted">No results received.</div>`;
-    }
-
-    // Simple local “Recent projects”
-    function loadRecent(){ try { return JSON.parse(localStorage.getItem("pr_projects")||"[]"); } catch { return []; } }
-    function saveRecent(arr){ localStorage.setItem("pr_projects", JSON.stringify(arr)); }
-    function trySaveRecent(p){
-      const items = loadRecent();
-      const entry = {
-        title: p?.topic || (q.value||"").trim() || "Untitled",
-        ts: Date.now(),
-        summary: p?.summary || "",
-        results: (p?.results||[]).slice(0,6)
-      };
-      const i = items.findIndex(x => (x.title||"").toLowerCase() === entry.title.toLowerCase());
-      if (i>=0) items[i]=entry; else items.unshift(entry);
-      saveRecent(items.slice(0,8));
-      renderRecent();
-    }
-    function renderRecent(){
-      const grid = document.getElementById("projGrid");
-      const empty = document.getElementById("projEmpty");
-      const items = loadRecent();
-      grid.innerHTML = "";
-      empty.style.display = items.length ? "none" : "block";
-      items.slice(0,6).forEach(p=>{
-        const el = document.createElement("div");
-        el.className = "card";
-        const when = new Date(p.ts||Date.now()).toLocaleString();
-        el.innerHTML = `
-          <h3>${esc(p.title)}</h3>
-          <p class="muted">${when}</p>
-          ${p.summary ? `<p style="margin-top:6px">${esc(p.summary).slice(0,180)}...</p>` : ""}
-          ${(p.results||[]).length ? `<p class="muted" style="margin-top:6px">${p.results.length} sources</p>` : ""}
-          <div style="margin-top:8px"><a href="#results" class="link-btn" onclick='window.displayRecent(${JSON.stringify(p.title)})'>Open</a></div>
-        `;
-        grid.appendChild(el);
-      });
-    }
-    window.displayRecent = (title)=>{
-      const items = loadRecent();
-      const p = items.find(x => (x.title||"").toLowerCase() === String(title).toLowerCase());
-      if (!p) return;
-      renderResults({topic:p.title, summary:p.summary, results:p.results});
-      document.getElementById("resultsBox").scrollIntoView({behavior:"smooth", block:"start"});
-    };
-    renderRecent();
-
-    // Helpers
-    function esc(s){ return String(s||"").replace(/[&<>"']/g,c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
-    function splitToBullets(text){
-      const t = String(text||"").trim();
-      if(!t) return [];
-      return t.split(/(?<=\.)\s+/).map(x=>x.trim()).filter(Boolean).slice(0,6);
-    }
-    function drawBar(canvasId, pts){
+    // Receive results
+    const resultsBox=document.getElementById("resultsBox");
+    window.addEventListener("message",event=>{
       try{
-        const el = document.getElementById(canvasId); if(!el||!pts||!pts.length) return;
-        const ctx = el.getContext('2d'); const W = el.width, H = el.height, pad = 30;
-        ctx.clearRect(0,0,W,H);
-        const max = Math.max(...pts.map(p=>p.count||0),1);
-        const bw = (W - pad*2) / pts.length;
-        ctx.strokeStyle = "#e5e7eb"; ctx.beginPath(); ctx.moveTo(pad,H-pad); ctx.lineTo(W-pad,H-pad); ctx.stroke();
-        pts.forEach((p,i)=>{
-          const x = pad + i*bw + 6;
-          const h = Math.round(((p.count||0)/max) * (H - pad*2));
-          ctx.fillStyle = "#111827";
-          ctx.fillRect(x, H-pad-h, Math.max(8,bw-12), h);
-          ctx.fillStyle = "#6b7280"; ctx.font = "10px Inter";
-          ctx.fillText(String(p.domain||"").slice(0,12), x, H - pad + 12);
-        });
-      }catch{}
-    }
+        const appOrigin=new URL(APP_BASE).origin;
+        if(event.origin!==appOrigin)return;
+      }catch{return;}
+      const data=event.data||{};
+      if(data.type!=="pr_results"||!data.payload)return;
+      const p=data.payload;
+      let html="";
+      if(p.topic)html+=`<h3>${p.topic}</h3>`;
+      if(p.summary)html+=`<p>${p.summary}</p>`;
+      if(Array.isArray(p.results)&&p.results.length){
+        html+="<ul>";
+        for(const r of p.results.slice(0,6)){
+          const t=r.title||r.url||"";const u=r.url?`<a href='${r.url}' target='_blank'>${t}</a>`:t;
+          html+=`<li>${u} — ${r.domain||""}</li>`;
+        }
+        html+="</ul>";
+      }
+      resultsBox.innerHTML=html||"No results.";
+    });
   </script>
 </body>
 </html>
