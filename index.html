@@ -1,303 +1,120 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="auto">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Promptly Resumed — Research Lab</title>
-  <meta name="description" content="A minimal research lab where I learn tools by doing: projects on topics I find interesting, using SQL, Python, and APIs." />
-  <meta name="color-scheme" content="light dark" />
-
-  <!-- Inter + system fallbacks; remove if you prefer only system fonts -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;650;700&display=swap" rel="stylesheet">
-
-  <style>
-    /* ---------- Theme tokens ---------- */
-    :root {
-      --bg: #ffffff;
-      --text: #111418;
-      --muted: #5b616b;
-      --line: #e7e9ee;
-      --card: #fafbfc;
-      --accent: #0b57d0;
-      --accent-contrast: #ffffff;
-      --code: #0f111a;
-      --radius: 12px;
-      --max: 920px;
-      --shadow: 0 2px 20px rgba(0,0,0,.04);
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0c0f14;
-        --text: #e7ecf3;
-        --muted: #a7b0bd;
-        --line: #1b2330;
-        --card: #0f141b;
-        --accent: #7aa2ff;
-        --accent-contrast: #0c0f14;
-        --code: #0a0d12;
-        --shadow: 0 6px 24px rgba(0,0,0,.35);
-      }
-    }
-    /* Force theme when [data-theme] is set */
-    html[data-theme="light"] {
-      --bg:#ffffff; --text:#111418; --muted:#5b616b; --line:#e7e9ee; --card:#fafbfc; --accent:#0b57d0; --accent-contrast:#ffffff; --code:#0f111a; --shadow:0 2px 20px rgba(0,0,0,.04);
-    }
-    html[data-theme="dark"] {
-      --bg:#0c0f14; --text:#e7ecf3; --muted:#a7b0bd; --line:#1b2330; --card:#0f141b; --accent:#7aa2ff; --accent-contrast:#0c0f14; --code:#0a0d12; --shadow:0 6px 24px rgba(0,0,0,.35);
-    }
-
-    /* ---------- Base ---------- */
-    * { box-sizing: border-box }
-    html, body { height: 100% }
-    body {
-      margin: 0;
-      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-    a { color: var(--accent); text-decoration: none }
-    a:hover { text-decoration: underline }
-    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace }
-
-    /* ---------- Layout ---------- */
-    .wrap { max-width: var(--max); margin: 0 auto; padding: 24px 18px }
-    header {
-      position: sticky; top: 0; z-index: 50;
-      background: color-mix(in oklab, var(--bg) 80%, transparent);
-      backdrop-filter: blur(6px);
-      border-bottom: 1px solid var(--line);
-    }
-    .nav { display: flex; align-items: center; justify-content: space-between; gap: 12px }
-    .brand { font-weight: 700; letter-spacing: .2px }
-    .toggle {
-      display: inline-flex; align-items: center; gap: 10px;
-      border: 1px solid var(--line); padding: 8px 12px; border-radius: 999px;
-      background: var(--card); box-shadow: var(--shadow); cursor: pointer; user-select: none;
-    }
-    .toggle button {
-      all: unset; display: inline-flex; gap: 8px; align-items: center; cursor: pointer;
-    }
-    .toggle .icon { width: 18px; height: 18px; display: inline-block }
-    .hero { padding: 42px 18px 10px }
-    h1 { font-size: clamp(28px, 4vw, 44px); line-height: 1.15; margin: 0 0 10px }
-    .lead { color: var(--muted); font-size: clamp(16px, 2.2vw, 19px); margin: 0 }
-    .section { padding: 22px 18px }
-    .card {
-      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
-      box-shadow: var(--shadow); padding: 18px;
-    }
-    h2 { font-size: 20px; margin: 0 0 8px }
-    .muted { color: var(--muted) }
-
-    /* ---------- Grid ---------- */
-    .grid { display: grid; grid-template-columns: 1fr; gap: 14px }
-    @media (min-width: 860px) {
-      .grid { grid-template-columns: repeat(12, 1fr); gap: 16px }
-      .span-4 { grid-column: span 4 }
-      .span-6 { grid-column: span 6 }
-      .span-8 { grid-column: span 8 }
-      .span-12 { grid-column: span 12 }
-    }
-
-    /* ---------- Project list ---------- */
-    .proj {
-      display: flex; flex-direction: column; gap: 6px;
-      border: 1px solid var(--line); border-radius: 10px; padding: 14px; background: var(--bg);
-    }
-    .proj h3 { margin: 0; font-size: 17px }
-    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px }
-    .tag { font-size: 12px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted) }
-    .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center }
-    .btn {
-      display: inline-block; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line);
-      background: var(--bg); color: var(--text); text-decoration: none;
-    }
-    .btn.primary {
-      background: var(--accent); border-color: var(--accent); color: var(--accent-contrast);
-    }
-    footer { border-top: 1px solid var(--line); margin-top: 30px; padding: 26px 18px; text-align: center }
-
-    /* ---------- Code note ---------- */
-    .note { font-size: 13px; padding: 10px 12px; border-left: 3px solid var(--line); background: var(--card); border-radius: 8px }
-  </style>
-</head>
 <body>
-  <header>
-    <div class="wrap nav" aria-label="Site">
-      <div class="brand">Promptly Resumed</div>
-      <div class="toggle" role="group" aria-label="Theme">
-        <button id="themeBtn" aria-pressed="false" title="Toggle light/dark">
-          <span class="icon" aria-hidden="true" id="themeIcon">🌙</span>
-          <span id="themeLabel" class="muted">Dark</span>
-        </button>
+<header>
+  <h1>Promptly Resumed</h1>
+  <p class="lead">Reason with logic. Browse fresh research. (Optional) Draft research-style briefs.</p>
+</header>
+
+<div class="card">
+  <div class="tabs">
+    <div class="tab active" data-view="logic">Logic Engine</div>
+    <div class="tab" data-view="digest">Daily Research</div>
+    <div class="tab" data-view="writer" id="writerTab" style="display:none">Research Writer</div>
+  </div>
+
+  <!-- LOGIC ENGINE -->
+  <div class="view active" id="logic">
+    <label>Your claim</label>
+    <textarea id="claim" placeholder="e.g., If X then Y..."></textarea>
+    <button id="runLogic">Analyze</button>
+    <div class="grid" id="logicResults" style="display:none;margin-top:12px">
+      <div class="panel"><h3>Logical Defense</h3><pre id="defense"></pre></div>
+      <div class="panel"><h3>Logical Challenge</h3><pre id="challenge"></pre></div>
+      <div class="panel" style="grid-column:1 / -1">
+        <h3>Assessment</h3><pre id="assessment"></pre>
+        <h3>Logical Map</h3><pre id="lmap"></pre>
       </div>
     </div>
-  </header>
+  </div>
 
-  <main>
-    <section class="wrap hero" id="home" aria-labelledby="title">
-      <h1 id="title">A simple research lab where I learn by doing.</h1>
-      <p class="lead">
-        I’m building small projects on topics I find interesting. The goal is hands-on practice:
-        store and query data with SQL, analyze with Python, pull from APIs, and explain results clearly.
-        This is how I’ll actually learn the tools—by using them.
-      </p>
-      <div class="row" style="margin-top:16px">
-        <a class="btn primary" href="#projects">See project slots</a>
-        <a class="btn" href="#about">Why this exists</a>
-      </div>
-    </section>
+  <!-- DAILY DIGEST -->
+  <div class="view" id="digest">
+    <p class="lead">Top items from arXiv / PubMed / Crossref & selected feeds.</p>
+    <button id="loadDigest">Load Today’s Digest</button>
+    <ul id="digestList" style="margin-top:12px"></ul>
+  </div>
 
-    <section class="wrap section grid" id="about" aria-labelledby="about-title">
-      <div class="span-8 card">
-        <h2 id="about-title">Why this exists</h2>
-        <p>
-          Courses can help, but I learn faster by building. This site is my space to practice essential work:
-          writing SQL, shaping data with pandas, calling APIs, and turning ideas into repeatable workflows.
-          It’s not a resume; it’s an ongoing record of what I’m learning through real projects.
-        </p>
-        <p class="muted">Clear scope, small steps, shipped often.</p>
-      </div>
-      <div class="span-4 card">
-        <h2>Focus</h2>
-        <ul style="margin:0; padding-left:18px">
-          <li>Practical SQL and joins</li>
-          <li>Data cleaning and viz</li>
-          <li>ETL and simple automation</li>
-          <li>APIs and small models</li>
-          <li>Short write-ups with limits</li>
-        </ul>
-      </div>
-    </section>
+  <!-- OPTIONAL: xAI RESEARCH WRITER -->
+  <div class="view" id="writer">
+    <label>Topic / Question</label>
+    <textarea id="topic" placeholder="e.g., What’s the evidence that X reduces Y?"></textarea>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <select id="tone">
+        <option value="neutral analyst">Neutral analyst</option>
+        <option value="policy brief">Policy brief</option>
+        <option value="contrarian">Contrarian</option>
+      </select>
+      <select id="audience">
+        <option value="general">General</option>
+        <option value="technical">Technical</option>
+        <option value="policy makers">Policy makers</option>
+      </select>
+    </div>
+    <button id="runWriter" style="margin-top:10px">Draft Research Brief</button>
+    <div class="panel" style="margin-top:12px;display:none" id="writerOut">
+      <h3>Draft</h3>
+      <pre id="writerText"></pre>
+    </div>
+  </div>
+</div>
 
-    <section class="wrap section" id="projects" aria-labelledby="proj-title">
-      <div class="grid">
-        <div class="span-12">
-          <h2 id="proj-title">Project slots</h2>
-          <p class="muted" style="margin-top:-4px">Placeholders for now. I’ll link live demos as I build.</p>
-        </div>
+<footer>© Promptly Resumed</footer>
 
-        <article class="span-6 proj">
-          <h3>Economic Patterns</h3>
-          <p>Track a few indicators, calculate rolling trends, and keep notes on what changes and why.</p>
-          <div class="tags">
-            <span class="tag">SQL</span><span class="tag">pandas</span><span class="tag">time series</span>
-          </div>
-          <div class="row">
-            <a class="btn" href="#" aria-disabled="true">Notes (soon)</a>
-            <a class="btn" href="#" aria-disabled="true">Demo (soon)</a>
-          </div>
-        </article>
+<script>
+// tabs
+document.querySelectorAll('.tab').forEach(t=>{
+  t.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+                 document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+                 t.classList.add('active'); document.getElementById(t.dataset.view).classList.add('active');}
+});
+// hide/show Writer tab by feature flag
+if (window.HAS_XAI) document.getElementById('writerTab').style.display='inline-block';
 
-        <article class="span-6 proj">
-          <h3>Social Sentiment</h3>
-          <p>Collect topic snippets, score polarity, compare baselines over time, and visualize shifts.</p>
-          <div class="tags">
-            <span class="tag">APIs</span><span class="tag">NLTK/TextBlob</span><span class="tag">charts</span>
-          </div>
-          <div class="row">
-            <a class="btn" href="#" aria-disabled="true">Notes (soon)</a>
-            <a class="btn" href="#" aria-disabled="true">Demo (soon)</a>
-          </div>
-        </article>
+// Logic Engine
+const API_LOGIC = "/analyze";
+document.getElementById('runLogic').onclick = async ()=>{
+  const claim = document.getElementById('claim').value.trim();
+  if(!claim) return;
+  const r = await fetch(API_LOGIC,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({claim})});
+  const d = await r.json();
+  document.getElementById('defense').textContent = (d.logical_defense||[]).join("\n");
+  document.getElementById('challenge').textContent = (d.logical_challenge||[]).join("\n");
+  document.getElementById('assessment').textContent = d.assessment||"";
+  document.getElementById('lmap').textContent = JSON.stringify(d.logical_map,null,2);
+  document.getElementById('logicResults').style.display = "grid";
+};
 
-        <article class="span-6 proj">
-          <h3>Environmental Signals</h3>
-          <p>Daily temperature and precipitation trends with smoothing and simple anomaly checks.</p>
-          <div class="tags">
-            <span class="tag">CSV</span><span class="tag">pandas</span><span class="tag">viz</span>
-          </div>
-          <div class="row">
-            <a class="btn" href="#" aria-disabled="true">Notes (soon)</a>
-            <a class="btn" href="#" aria-disabled="true">Demo (soon)</a>
-          </div>
-        </article>
+// Daily Digest
+document.getElementById('loadDigest').onclick = async ()=>{
+  const today = new Date().toISOString().slice(0,10);
+  const url = `/data/digest/${today}.json`;
+  const list = document.getElementById('digestList');
+  try{
+    const r = await fetch(url);
+    const j = await r.json();
+    list.innerHTML = j.items.map((e,i)=>`
+      <li style="margin:10px 0">
+        <strong>${i+1}. ${e.title}</strong><br/>
+        <em>${e.source}</em> — Score ${e.score} — <a href="${e.url}" target="_blank">Link</a>
+        ${e.abstract ? `<div style="opacity:.85;margin-top:4px">${e.abstract.slice(0,300)}${e.abstract.length>300?'…':''}</div>`:''}
+      </li>`).join("");
+  }catch(e){ list.innerHTML = "<li>Today’s digest not available yet.</li>"; }
+};
 
-        <article class="span-6 proj">
-          <h3>Truthiness Heuristics</h3>
-          <p>Store article snippets and test simple keyword/consistency rules to flag claims.</p>
-          <div class="tags">
-            <span class="tag">SQLite</span><span class="tag">full-text</span><span class="tag">heuristics</span>
-          </div>
-          <div class="row">
-            <a class="btn" href="#" aria-disabled="true">Notes (soon)</a>
-            <a class="btn" href="#" aria-disabled="true">Demo (soon)</a>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="wrap section grid" aria-labelledby="now-title">
-      <div class="span-8 card">
-        <h2 id="now-title">Now / Next</h2>
-        <ol style="margin:0; padding-left:18px">
-          <li>Set up a small SQLite database and seed sample tables.</li>
-          <li>Build a Streamlit page that reads from the DB and renders a basic chart.</li>
-          <li>Add a daily script to refresh data and commit results.</li>
-          <li>Write short notes explaining assumptions and limitations.</li>
-        </ol>
-      </div>
-      <div class="span-4 card">
-        <h2>Contact</h2>
-        <p class="muted">Have a dataset or idea?</p>
-        <p><a href="mailto:you@promptlyresumed.com">you@promptlyresumed.com</a></p>
-        <p class="note">This site is intentionally minimal. The value is the work.</p>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="wrap muted">© <span id="year"></span> Promptly Resumed</div>
-  </footer>
-
-  <script>
-    // Theme logic: read preference, respect system, allow toggle, remember choice.
-    (function(){
-      const root = document.documentElement;
-      const btn = document.getElementById('themeBtn');
-      const label = document.getElementById('themeLabel');
-      const icon = document.getElementById('themeIcon');
-
-      const stored = localStorage.getItem('theme'); // 'light' | 'dark' | null
-      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-      function apply(theme) {
-        // theme: 'light' | 'dark' | 'auto'
-        root.setAttribute('data-theme', theme);
-        const effective = theme === 'auto' ? (prefersDark ? 'dark' : 'light') : theme;
-        if (effective === 'dark') {
-          icon.textContent = '🌙'; label.textContent = 'Dark'; btn.setAttribute('aria-pressed','true');
-        } else {
-          icon.textContent = '☀️'; label.textContent = 'Light'; btn.setAttribute('aria-pressed','false');
-        }
-      }
-
-      // initialize
-      apply(stored ?? 'auto');
-
-      // toggle: light <-> dark (cycles through auto if user long-presses Shift)
-      btn.addEventListener('click', (e) => {
-        const current = root.getAttribute('data-theme');
-        let next = current === 'dark' ? 'light' : (current === 'light' ? 'dark' : (prefersDark ? 'light' : 'dark'));
-        // If user holds Shift, set to 'auto'
-        if (e.shiftKey) next = 'auto';
-        localStorage.setItem('theme', next === 'auto' ? 'auto' : next);
-        apply(next);
-      });
-
-      // keep in sync with system changes when in 'auto'
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-        const current = localStorage.getItem('theme') ?? 'auto';
-        if (current === 'auto') apply('auto');
-      });
-
-      // year
-      document.getElementById('year').textContent = new Date().getFullYear();
-    })();
-  </script>
+// OPTIONAL Research Writer (enable only if you add /api/research)
+const API_WRITER = "/research";
+document.getElementById('runWriter')?.addEventListener('click', async ()=>{
+  const payload = {
+    query: document.getElementById('topic').value.trim(),
+    tone: document.getElementById('tone').value,
+    audience: document.getElementById('audience').value,
+    target_lang: "en"
+  };
+  if(!payload.query) return;
+  const r = await fetch(API_WRITER,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+  const j = await r.json();
+  document.getElementById('writerText').textContent = j.report || "No draft.";
+  document.getElementById('writerOut').style.display = "block";
+});
+</script>
 </body>
 </html>
