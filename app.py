@@ -8,6 +8,15 @@ import streamlit as st
 import plotly.express as px
 
 # ─────────────────────────────────────────────────────────────
+# Optional: load .env during local dev (ignored on Streamlit Cloud)
+# ─────────────────────────────────────────────────────────────
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except Exception:
+    pass
+
+# ─────────────────────────────────────────────────────────────
 # App config
 # ─────────────────────────────────────────────────────────────
 st.set_page_config(page_title="Promptly Resumed — Research Lab", layout="wide")
@@ -15,15 +24,30 @@ st.title("Promptly Resumed — Research Lab")
 st.caption("xAI-powered research with SQLite project logging and live results back to the site.")
 
 # ─────────────────────────────────────────────────────────────
-# Env / constants  (ONLY XAI_API_KEY is required)
+# Secrets / Env (ONLY XAI_API_KEY required)
 # ─────────────────────────────────────────────────────────────
-XAI_API_KEY = (os.getenv("XAI_API_KEY") or "").strip()
-XAI_API_BASE = "https://api.x.ai/v1"              # fixed default
-XAI_MODEL = "grok-4-0709"                          # fixed default
-DB_PATH = os.getenv("PR_DB_PATH", "research.db")   # local SQLite file
+def get_secret(name: str, default: str = "") -> str:
+    # 1) Streamlit Cloud Secrets
+    try:
+        if name in st.secrets:
+            return str(st.secrets[name]).strip()
+    except Exception:
+        pass
+    # 2) Environment variable
+    val = os.getenv(name, default)
+    return (val or "").strip()
+
+XAI_API_KEY = get_secret("XAI_API_KEY")
+XAI_API_BASE = "https://api.x.ai/v1"         # fixed default
+XAI_MODEL    = "grok-4-0709"                 # fixed default
+DB_PATH      = os.getenv("PR_DB_PATH", "research.db")
 
 if not XAI_API_KEY:
-    st.error("Missing XAI_API_KEY in environment/secrets.")
+    st.error(
+        "Missing XAI_API_KEY.\n\n"
+        "On Streamlit Cloud: go to **App → Settings → Secrets** and add:\n\n"
+        "```\nXAI_API_KEY = <your_key_here>\n```\n"
+    )
     st.stop()
 
 # ─────────────────────────────────────────────────────────────
@@ -37,8 +61,6 @@ conn = get_conn()
 
 def ensure_schema():
     cur = conn.cursor()
-
-    # Basic projects table (no exotic defaults; compatible on Streamlit Cloud)
     cur.execute("""
     CREATE TABLE IF NOT EXISTS projects(
         id INTEGER PRIMARY KEY,
@@ -47,10 +69,7 @@ def ensure_schema():
         notes TEXT,
         created_at TEXT,
         updated_at TEXT
-    )
-    """)
-
-    # Log every analysis run (optionally attached to a project)
+    )""")
     cur.execute("""
     CREATE TABLE IF NOT EXISTS searches(
         id INTEGER PRIMARY KEY,
@@ -59,20 +78,17 @@ def ensure_schema():
         result_json TEXT,
         ts TEXT,
         FOREIGN KEY(project_id) REFERENCES projects(id)
-    )
-    """)
-
+    )""")
     conn.commit()
 
 ensure_schema()
 
 # ─────────────────────────────────────────────────────────────
-# Utility: robust query param reader (works across Streamlit versions)
+# Query params (new and legacy Streamlit APIs)
 # ─────────────────────────────────────────────────────────────
 def get_query_param(name: str, default: str = "") -> str:
     try:
-        # New API (1.33+)
-        qp = st.query_params
+        qp = st.query_params  # Streamlit >=1.33
         if isinstance(qp, dict):
             val = qp.get(name, [""])
             if isinstance(val, list):
@@ -81,8 +97,7 @@ def get_query_param(name: str, default: str = "") -> str:
     except Exception:
         pass
     try:
-        # Legacy
-        params = st.experimental_get_query_params()
+        params = st.experimental_get_query_params()  # legacy
         val = params.get(name, [""])
         return (val[0] if val else "") or default
     except Exception:
@@ -114,7 +129,7 @@ def call_xai_web_search(topic: str) -> dict:
     r.raise_for_status()
     content = r.json()["choices"][0]["message"]["content"]
 
-    # Parse safe JSON (unwrap fences if any)
+    # Parse JSON (strip code fences if present)
     if isinstance(content, str):
         text = content.strip()
         if text.startswith("```"):
@@ -131,7 +146,7 @@ def call_xai_web_search(topic: str) -> dict:
     else:
         data = {"summary": "", "results": []}
 
-    # Normalize result items
+    # Normalize
     norm = []
     for r in data.get("results", []):
         url = (r.get("url") or "").strip()
@@ -150,22 +165,27 @@ def call_xai_web_search(topic: str) -> dict:
     return data
 
 # ─────────────────────────────────────────────────────────────
-# PostMessage bridge back to the parent website
+# Post results back to parent iframe OR opener tab
 # ─────────────────────────────────────────────────────────────
-def send_results_back(results_dict: dict):
+def send_results_back(results_dict: dict, origin: str = ""):
     """
-    Posts results to the embedding site (index.html) using window.postMessage.
+    Posts results to:
+      - parent iframe if embedded
+      - else window.opener if opened in a new tab from the host page
+    If `origin` is provided (from ?origin=...), we can target that specific origin.
     """
     payload = json.dumps(results_dict, ensure_ascii=False)
+    target = json.dumps(origin or "*")
     st.components.v1.html(
         f"""
         <script>
         try {{
-          if (window.parent) {{
-            window.parent.postMessage({{
-              type: "pr_results",
-              payload: {payload}
-            }}, "*");  // tighten by replacing "*" with your site origin if desired
+          const data = {{ type: "pr_results", payload: {payload} }};
+          const target = {target};
+          if (window.parent && window.parent !== window) {{
+            window.parent.postMessage(data, target);
+          }} else if (window.opener && !window.opener.closed) {{
+            window.opener.postMessage(data, target);
           }}
         }} catch(e) {{ console.warn("postMessage failed", e); }}
         </script>
@@ -174,7 +194,7 @@ def send_results_back(results_dict: dict):
     )
 
 # ─────────────────────────────────────────────────────────────
-# Sidebar: simple Projects manager
+# Sidebar: Projects
 # ─────────────────────────────────────────────────────────────
 st.sidebar.header("Projects")
 
@@ -206,7 +226,7 @@ with st.sidebar.expander("New / Edit Project", expanded=True):
             st.experimental_rerun()
 
 projects_df = pd.read_sql_query(
-    "SELECT id, title, tags, notes, created_at, updated_at FROM projects ORDER BY updated_at DESC NULLS LAST",
+    "SELECT id, title, tags, notes, created_at, updated_at FROM projects ORDER BY updated_at DESC",
     conn
 )
 if projects_df.empty:
@@ -237,7 +257,7 @@ st.divider()
 st.subheader("Research Console")
 
 topic_prefill = get_query_param("q", "")
-origin_hint = get_query_param("origin", "")  # optional, for future origin checks
+origin_hint   = get_query_param("origin", "")  # used to target postMessage
 
 topic = st.text_input(
     "Research Topic",
@@ -270,8 +290,7 @@ if run:
             if link_title.strip():
                 row = pd.read_sql_query(
                     "SELECT id FROM projects WHERE title = ? LIMIT 1",
-                    conn,
-                    params=[link_title.strip()]
+                    conn, params=[link_title.strip()]
                 )
                 if not row.empty:
                     project_id = int(row["id"].iloc[0])
@@ -283,7 +302,7 @@ if run:
         except Exception as e:
             st.error(f"DB insert failed: {e}")
 
-        # Build simple domain frequency for the site chart
+        # Domain counts for site chart
         domains = [x.get("domain","") for x in result_obj.get("results", []) if x.get("domain")]
         if domains:
             counts_df = pd.Series(domains).value_counts().reset_index()
@@ -292,22 +311,22 @@ if run:
         else:
             domain_counts = []
 
-        # Post back to the parent site (iframe host)
+        # Post back (iframe or opener)
         send_results_back({
             "topic": topic.strip(),
             "summary": result_obj.get("summary",""),
             "results": result_obj.get("results", [])[:10],
             "charts": {"domainCounts": domain_counts}
-        })
+        }, origin=origin_hint)
 
 # ─────────────────────────────────────────────────────────────
-# Results in-app (so it's useful even standalone)
+# Results in-app
 # ─────────────────────────────────────────────────────────────
 st.divider()
 st.subheader("Results")
 
 if not result_obj:
-    # If this is a fresh load, show last run (if any)
+    # Show last run if any
     recent = pd.read_sql_query("SELECT query, result_json, ts FROM searches ORDER BY ts DESC LIMIT 1", conn)
     if not recent.empty:
         topic = recent["query"].iloc[0]
